@@ -1,5 +1,20 @@
 import React, {useState} from 'react';
+import config from '../../config.js';
+import firebase from '../Firebase/index.js';
+
+
 const Upload = (props) => {
+
+    const db = firebase.firestore();
+    // db.collection("artifacts").doc("sample").set({
+    //     title: "sample",
+    // })
+    //     .then(() => {
+    //         console.log("Successfuly saved");
+    //     })
+    //     .catch( error => {
+    //         console.log(error);
+    //     });
     const [fields, setFields] = useState([{value: null}]);
 
     const addInputField = () => {
@@ -17,6 +32,10 @@ const Upload = (props) => {
         <div>
         <form>
             {/*Initial Fields*/}
+            <label>
+                <input type="file"/>
+            </label>
+            <br/>
             <label>
                 {"Name"}
                 <input type="text"/>
