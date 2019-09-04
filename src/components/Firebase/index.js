@@ -1,7 +1,5 @@
 import React from 'react';
-const Firebase = () => (
-    <div>
-        <h1>App</h1>
-    </div>
-);
-export default Firebase;
+import * as firebase from "firebase";
+import config from '../../config.js';
+
+export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
