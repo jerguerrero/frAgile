@@ -1,0 +1,29 @@
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 15vw;
+    text-align: left;
+}
+input {
+    display: inline-block;
+    float: right;
+}
+#fileupload{
+    display: inline-block;
+    float: left;
+    text-align: center;
+}
+#addfieldbutton{
+    display: inline-block;
+    float: right;
+    clear: right;
+    text-align: right;
+}
+#addfieldinput {
+    display: inline-block;
+    float: left;
+    width: 9vw;
+}
+
+

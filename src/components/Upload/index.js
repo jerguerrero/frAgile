@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import firebase from '../Firebase/index.js';
 import FileUploader from "react-firebase-file-uploader";
+import Grid from '@material-ui/core/Grid';
+import Infinite from "react-infinite";
+import './upload.css';
+
 
 const Upload = (props) => {
 
@@ -53,11 +57,14 @@ const Upload = (props) => {
     };
 
     const handleUploadSuccess = (filename, task) => {
-        console.log(filename);
-        console.log(task);
         storage.child(filename).getDownloadURL()
             .then(imageUrl =>{
                 createArtifactWithImage(imageUrl);
+                setFormValues({});
+                setFields([]);
+                setImage(null);
+                setLabel(null);
+
              })
             .catch(error => {
                 console.log(error);
@@ -67,8 +74,6 @@ const Upload = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault ();
-        console.log(uploader);
-        console.log(image);
         if (uploader && image) {
             uploader.startUpload(image);
         }
@@ -76,69 +81,100 @@ const Upload = (props) => {
 
     return (
         <div>
-        <form onSubmit={event => handleSubmit(event)}>
-            {/*Initial Fields*/}
-            <label>
-                Image
-                <FileUploader
-                    ref={uploader => {setUploader(uploader)}}
-                    accept="image/*"
-                    randomizeFilename
-                    storageRef={storage}
-                    onChange={handleChangeImage}
-                    onUploadSuccess={(filename, task) =>
-                        handleUploadSuccess(filename, task)}
-                    onUploadError={error => {console.log(error)}}
-                />
-            </label>
-            <br/>
-            <label >
-                {"Name"}
-                <input
-                    type="text"
-                    onChange={event => handleInputChange("Name", event)}
-                />
-            </label>
-            <br/>
-            <label>
-                {"Tags"}
-                <input
-                    type="text"
-                    onChange={event => handleInputChange("Tags", event)}
-                />
-            </label>
-            <br/>
-            {fields.map((label, index) => {
-                return (
-                    <div key={`${label}-${index}`}>
-                        <label>
-                            {label}
-                        <input
-                            type="text"
-                            placeholder="Enter text"
-                            onChange={event => handleInputChange(label, event)}
-                        />
-                        </label>
-                    </div>
-                );
-            })}
-            {/*Adding new fields dynamically*/}
-            <label>
-                {"Add Information"}
-                <br/>
-            <textarea
-                placeholder={"Enter Label"}
-                value={label}
-                onChange={event => {handleLabelChange(event)}}/>
-            <button
-                type="button"
-                onClick={() => addInputField(label)}>
-                +
-            </button>
-            </label>
+            <Grid container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="center"
+                  spacing={4}>
+                <Grid item xs={2}>
+                    <Infinite containerHeight={200} elementHeight={40}>
 
-            <input type="submit" value="Submit" />
-        </form>
+                    </Infinite>
+                </Grid>
+                <Grid item xs={2}>
+                    <form onSubmit={event => handleSubmit(event)}>
+                        {/*Initial Fields*/}
+                            <FileUploader
+                                id={'fileupload'}
+                                ref={uploader => {setUploader(uploader)}}
+                                accept="image/*"
+                                randomizeFilename
+                                storageRef={storage}
+                                onChange={handleChangeImage}
+                                onUploadSuccess={(filename, task) =>
+                                    handleUploadSuccess(filename, task)}
+                                onUploadError={error => {console.log(error)}}
+                            />
+                        <br/>
+                        <br/>
+                        <br/>
+                        <label >
+                            {"Name"}
+                            <input
+                                type="text"
+                                onChange={event => handleInputChange("Name", event)}
+                                value={formValues.Name}
+                            />
+                        </label>
+                        <br/>
+                        <label>
+                            {"Tags"}
+                            <input
+                                type="text"
+                                onChange={event => handleInputChange("Tags", event)}
+                            />
+                        </label>
+                        <br/>
+                        {fields.map((label, index) => {
+                            return (
+                                <div key={`${label}-${index}`}>
+                                    <label>
+                                        {label}
+                                        <input
+                                            type="text"
+                                            placeholder="Enter text"
+                                            onChange={event => handleInputChange(label, event)}
+                                        />
+                                    </label>
+                                </div>
+                            );
+                        })}
+                        {/*Adding new fields dynamically*/}
+                        <br/>
+                        <br/>
+                        <div>
+                        <label>
+
+
+
+                            <input
+                                id={"addfieldinput"}
+                                type="text"
+                                placeholder="Enter Label"
+                                onChange={event => handleLabelChange(event)}
+                                value={label}
+                            />
+
+                            <button
+                                id={"addfieldbutton"}
+                                type="button"
+                                onClick={() => addInputField(label)}>
+                                {"Add Input"}
+                            </button>
+                            <br/>
+
+
+
+                        </label>
+                        </div>
+
+                        <input type="submit" value="Submit" />
+                    </form>
+                </Grid>
+                <Grid item xs={2}>
+                </Grid>
+            </Grid>
+
         </div>
     )
 };
