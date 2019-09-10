@@ -31,7 +31,7 @@ const Home = () => {
         <Grid container
               direction="row"
               justify="space-around"
-              alignItems="baseline"
+              alignItems="center"
               spacing={4}>
             <Grid item xs={2}>
                 <Infinite containerHeight={200} elementHeight={40}>
@@ -54,7 +54,7 @@ const Home = () => {
                         image={currentImage}/>
                 </Card>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={2}>
                 <Infinite containerHeight={200} elementHeight={60}>
                 {(() => {
                     if(value){
