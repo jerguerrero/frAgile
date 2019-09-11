@@ -43,7 +43,7 @@ const Home = () => {
         <Grid container direction="row"
               justify="space-between"
               alignItems="center"
-        spacing={100}>
+        spacing={10}>
 
             {/*<div >*/}
            
