@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import ListItem from '@material-ui/core/ListItem';
 import CardMedia from '@material-ui/core/CardMedia';
 import ListItemText from '@material-ui/core/ListItemText';
+import './home.css';
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
 
     const [currentImage, setCurrentImage] = useState(null);
     const [currentDocument, setCurrentDocument] = useState({});
+
     const [value, loading, error] = useCollection(
         db.collection('artifacts'),
         {
@@ -27,14 +29,14 @@ const Home = () => {
     }
 
     return (
-    <div>
+    <div id={"homecontainer"}>
         <Grid container
               direction="row"
-              justify="space-around"
-              alignItems="center"
+              justify="space-evenly"
+              alignItems="flex-start"
               spacing={4}>
-            <Grid item xs={2}>
-                <Infinite containerHeight={200} elementHeight={40}>
+            <Grid id={"leftpanelist"} item xs={2}>
+                <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
                     {Object.keys(currentDocument).map(key => {
                         return(
                             <ListItem>
@@ -47,14 +49,15 @@ const Home = () => {
                     })}
                 </Infinite>
             </Grid>
-            <Grid item xs={2}>
-                <Card>
+            <Grid id={"middlepane"} item xs={5}>
+
                     <CardMedia
+                        id={"middlepaneimage"}
                         component="img"
                         image={currentImage}/>
-                </Card>
+
             </Grid>
-            <Grid item xs={2}>
+            <Grid id="rightpanelist" item xs={2}>
                 <Infinite containerHeight={200} elementHeight={60}>
                 {(() => {
                     if(value){
