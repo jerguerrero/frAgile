@@ -10,6 +10,7 @@ import './app.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faFileUpload } from '@fortawesome/free-solid-svg-icons';
+import Login from '../Login';
 
 library.add(faHome, faFileUpload )
 
@@ -21,9 +22,6 @@ const App = (props) => {
         <Router>
             <div >
 
-                <div id={"mainappcontainer"}>
-
-                </div>
                 <AppBar id={"mainappbar"} position="static" >
 
                     <Grid container
@@ -49,10 +47,15 @@ const App = (props) => {
                                 {" Upload"}
                             </Link>
                         </Grid>
+      <Grid item>
+                                  <Link to="/Login">Login</Link>
+                        </Grid>
+
                     </Grid>
                 </AppBar>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/Upload" component={Upload} />
+                <Route exact path="/Login" component={Login} />
             </div>
         </Router>
     );
