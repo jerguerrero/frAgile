@@ -16,7 +16,7 @@ const Upload = (props) => {
     // State for for form values
     const [formValues, setFormValues] = useState({});
     // State for extra input fields
-    const [fields, setFields] = useState([]);
+    const [fields, setFields] = useState(["Name", "Tags"]);
     const [label, setLabel] = useState(null);
     const [image, setImage] = useState(null);
     const [uploader, setUploader] = useState(null);
@@ -65,8 +65,9 @@ const Upload = (props) => {
             });
 
         createArtifactWithImage(imageUrl);
+        document.getElementById("photoUploadForm").reset();
         setFormValues({});
-        setFields([]);
+        setFields(["Name", "Tags"]);
         setImage(null);
         setLabel(null);
 
@@ -91,7 +92,7 @@ const Upload = (props) => {
                     </Infinite>
                 </Grid>
                 <Grid item xs={2}>
-                    <form onSubmit={event => handleSubmit(event)}>
+                    <form id={"photoUploadForm"} onSubmit={event => handleSubmit(event)}>
                         {/*Initial Fields*/}
                             <FileUploader
                                 id={'fileupload'}
@@ -107,22 +108,6 @@ const Upload = (props) => {
                         <br/>
                         <br/>
                         <br/>
-                        <label >
-                            {"Name"}
-                            <input
-                                type="text"
-                                onChange={event => handleInputChange("Name", event)}
-                                value={formValues.Name}
-                            />
-                        </label>
-                        <br/>
-                        <label>
-                            {"Tags"}
-                            <input
-                                type="text"
-                                onChange={event => handleInputChange("Tags", event)}
-                            />
-                        </label>
                         <br/>
                         {fields.map((label, index) => {
                             return (
