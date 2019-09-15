@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import firebase from '../Firebase/index.js';
 import FileUploader from "react-firebase-file-uploader";
 import Grid from '@material-ui/core/Grid';
+import { useAlert } from 'react-alert'
 import Infinite from "react-infinite";
 import './upload.css';
 
@@ -10,20 +11,25 @@ const Upload = (props) => {
 
     const db = firebase.firestore();
     const storage = firebase.storage().ref('image');
-
+    const alert = useAlert();
 
     // State for for form values
     const [formValues, setFormValues] = useState({});
     // State for extra input fields
-    const [fields, setFields] = useState([]);
+    const [fields, setFields] = useState(["Name", "Tags"]);
     const [label, setLabel] = useState(null);
     const [image, setImage] = useState(null);
     const [uploader, setUploader] = useState(null);
 
     const addInputField = (label) => {
         const values = [...fields];
-        values.push(label);
-        setFields(values);
+        if(values.includes(label)){
+            alert.show('Label already exists');
+        }
+        else{
+            values.push(label);
+            setFields(values);
+        }
     };
 
     const handleInputChange = (label, event) => {
@@ -50,25 +56,25 @@ const Upload = (props) => {
             .add(artifact)
             .then(() => {
                 console.log("Successfuly saved");
+                alert.show('Artifact Successfully Saved!')
             })
             .catch( error => {
                 console.log(error);
             });
     };
 
-    const handleUploadSuccess = (filename, task) => {
-        storage.child(filename).getDownloadURL()
-            .then(imageUrl =>{
-                createArtifactWithImage(imageUrl);
-                setFormValues({});
-                setFields([]);
-                setImage(null);
-                setLabel(null);
-
-             })
+    const handleUploadSuccess = async (filename, task) => {
+        const imageUrl = await storage.child(filename).getDownloadURL()
             .catch(error => {
                 console.log(error);
             });
+
+        createArtifactWithImage(imageUrl);
+        document.getElementById("photoUploadForm").reset();
+        setFormValues({});
+        setFields(["Name", "Tags"]);
+        setImage(null);
+        setLabel(null);
 
     };
 
@@ -88,11 +94,10 @@ const Upload = (props) => {
                   spacing={4}>
                 <Grid item xs={2}>
                     <Infinite containerHeight={200} elementHeight={40}>
-
                     </Infinite>
                 </Grid>
                 <Grid item xs={2}>
-                    <form onSubmit={event => handleSubmit(event)}>
+                    <form id={"photoUploadForm"} onSubmit={event => handleSubmit(event)}>
                         {/*Initial Fields*/}
                             <FileUploader
                                 id={'fileupload'}
@@ -108,22 +113,6 @@ const Upload = (props) => {
                         <br/>
                         <br/>
                         <br/>
-                        <label >
-                            {"Name"}
-                            <input
-                                type="text"
-                                onChange={event => handleInputChange("Name", event)}
-                                value={formValues.Name}
-                            />
-                        </label>
-                        <br/>
-                        <label>
-                            {"Tags"}
-                            <input
-                                type="text"
-                                onChange={event => handleInputChange("Tags", event)}
-                            />
-                        </label>
                         <br/>
                         {fields.map((label, index) => {
                             return (
@@ -144,9 +133,6 @@ const Upload = (props) => {
                         <br/>
                         <div>
                         <label>
-
-
-
                             <input
                                 id={"addfieldinput"}
                                 type="text"
@@ -154,7 +140,6 @@ const Upload = (props) => {
                                 onChange={event => handleLabelChange(event)}
                                 value={label}
                             />
-
                             <button
                                 id={"addfieldbutton"}
                                 type="button"
@@ -162,12 +147,8 @@ const Upload = (props) => {
                                 {"Add Input"}
                             </button>
                             <br/>
-
-
-
                         </label>
                         </div>
-
                         <input type="submit" value="Submit" />
                     </form>
                 </Grid>
