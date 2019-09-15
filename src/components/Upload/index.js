@@ -23,8 +23,13 @@ const Upload = (props) => {
 
     const addInputField = (label) => {
         const values = [...fields];
-        values.push(label);
-        setFields(values);
+        if(values.includes(label)){
+            alert.show('Label already exists');
+        }
+        else{
+            values.push(label);
+            setFields(values);
+        }
     };
 
     const handleInputChange = (label, event) => {
