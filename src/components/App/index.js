@@ -21,9 +21,7 @@ const App = (props) => {
 
         <Router>
             <div >
-
                 <AppBar id={"mainappbar"} position="static" >
-
                     <Grid container
                           direction="row"
                           justify="flex-start"
@@ -47,8 +45,8 @@ const App = (props) => {
                                 {" Upload"}
                             </Link>
                         </Grid>
-      <Grid item>
-                                  <Link to="/Login">Login</Link>
+                        <Grid item>
+                            <Link to="/Login">Login</Link>
                         </Grid>
 
                     </Grid>
