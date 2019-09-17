@@ -1,22 +1,27 @@
 #leftpanelist{
-    background-color: #66B9BF;
+    background-color: #FFFFFF;
     height: 50vh;
+    border-radius: 2%;
+    border-color: #DDDFE2;
+    border-width: thick;
 
 }
 
 #middlepane{
-    background-color: #66B9BF;
+    background-color:  #FFFFFF;
     height: 50vh;
+    border-radius: 2%;
 }
 
 #middlepaneimage{
-    background-color: #66B9BF;
+    background-color: #E7E3E1;
     height: 100%;
 }
 
 #rightpanelist{
-    background-color: #66B9BF;
+    background-color:  #FFFFFF;
     height: 50vh;
+    border-radius: 2%;
 }
 
 #homecontainer{
