@@ -32,8 +32,11 @@ const App = (props) => {
                                 <FontAwesomeIcon
                                     icon="home"
                                     size="xl"
+                                    color={"white"}
                                 />
-                                {" Home"}
+                                <text>
+                                    {" Home"}
+                                </text>
                             </Link>
                         </Grid>
                         <Grid item>
@@ -41,8 +44,11 @@ const App = (props) => {
                                 <FontAwesomeIcon
                                     icon="file-upload"
                                     size="xl"
+                                    color={"white"}
                                 />
-                                {" Upload"}
+                                <text>
+                                    {" Upload"}
+                                </text>
                             </Link>
                         </Grid>
                         <Grid item>

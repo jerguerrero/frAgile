@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import Infinite from "react-infinite";
-import firebase from '../Firebase/index.js';
-import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
-import Img from 'react-image';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import ListItem from '@material-ui/core/ListItem';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
+import firebase from '../Firebase/index.js';
+import Grid from '@material-ui/core/Grid';
+import Infinite from "react-infinite";
+import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import React, {useState} from 'react';
+import { useCollection} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
 
@@ -79,14 +80,20 @@ const Home = () => {
             <Grid id={"leftpanelist"} item xs={2}>
                 <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
                     {Object.keys(currentDocument).map(key => {
-                        return(
-                            <ListItem>
-                                <ListItemText
-                                    primary={key}
-                                    secondary={currentDocument[key]}
-                                />
-                            </ListItem>
-                        );
+                        if(key==="imageUrl"){
+                            return null;
+                        }
+                        else {
+                            return (
+
+                                <ListItem>
+                                    <ListItemText
+                                        primary={key}
+                                        secondary={currentDocument[key]}
+                                    />
+                                </ListItem>
+                            );
+                        }
                     })}
                 </Infinite>
             </Grid>
@@ -99,6 +106,12 @@ const Home = () => {
 
             </Grid>
             <Grid id="rightpanelist" item xs={2}>
+                <Card>
+                    <CardHeader
+                        style={{textAlign: "center"}}
+                        title="Artifacts"
+                    />
+                </Card>
                 <Infinite containerHeight={200} elementHeight={60}>
                 {(() => {
                     if(artifacts){
@@ -112,12 +125,13 @@ const Home = () => {
                                         setCurrentArtifactID(document.id);
                                         setCurrentDocumentRef(document.ref);
                                     }}>
-                                        {JSON.stringify(document.data().Name)}
+                                        {document.data().Name}
                                 </ListItem>);
                         });
                     }
                 })()}
                 </Infinite>
+
             </Grid>
         </Grid>
         <Grid container

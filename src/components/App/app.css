@@ -7,14 +7,15 @@
 }
 #mainappbar{
     padding-left: 10vw;
-    background-color: white;
-    height: 7vh;
+    background-color: #988D97;
+    height: 4vh;
     vertical-align: center;
     justify-content: center;
     margin-bottom: 5vw;
 }
 #mainappcontainer{
     background-color: #DCD0C0;
-
-
+}
+text{
+    color: white;
 }
