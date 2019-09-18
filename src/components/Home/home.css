@@ -1,22 +1,26 @@
 #leftpanelist{
-    background-color: #66B9BF;
+    background-color: #233237;
     height: 50vh;
+    color: white;
 
 }
 
 #middlepane{
-    background-color: #66B9BF;
+    background-color: #233237;
     height: 50vh;
+    color: white;
 }
 
 #middlepaneimage{
-    background-color: #66B9BF;
+    background-color: #233237;
     height: 100%;
+
 }
 
 #rightpanelist{
-    background-color: #66B9BF;
+    background-color: #233237;
     height: 50vh;
+    color: white;
 }
 
 #homecontainer{
