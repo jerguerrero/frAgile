@@ -12,6 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import Login from '../Login';
 
+// for testing only, should be deleted in the future
+import SignUp from '../SignUp';
+
 library.add(faHome, faFileUpload )
 
 const App = (props) => {
@@ -55,11 +58,20 @@ const App = (props) => {
                             <Link to="/Login">Login</Link>
                         </Grid>
 
+                        {/*for testing only, should be deleted in the future*/}
+                        <Grid item>
+                            <Link to="/SignUp">SignUp</Link>
+                        </Grid>
+
                     </Grid>
                 </AppBar>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
+
+                {/*for testing only, should be deleted in the future*/}
+                <Route exact path="/SignUp" component={SignUp} />
+
             </div>
         </Router>
     );
