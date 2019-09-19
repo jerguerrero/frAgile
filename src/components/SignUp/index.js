@@ -21,12 +21,14 @@ const SignUpPage = (props) => {
 
     const registerUser = (event) => {
         var user = formValues;
+        // see how to get email and passwords from the formValues
         auth.createUserWithEmailAndPassword(user.email, user.password)
             .then(authUser => {
-                this.setState({...INITIAL_STATE});
+                setFormValues({});
+                setFields(["Username", "Email", "Password", "Confirm Password"]);
             })
             .catch(error => {
-                this.setState({error});
+                //do something
             });
         event.preventDefault();
     }
