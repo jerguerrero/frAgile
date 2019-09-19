@@ -144,7 +144,7 @@ const Home = () => {
                     <TextField
                         id="standard-full-width"
                         style={{ margin: 8 }}
-                        placeholder="Commenting as (Name of User)"
+                        placeholder="Comment"
                         helperText={button}
                         fullWidth
                         margin="normal"
