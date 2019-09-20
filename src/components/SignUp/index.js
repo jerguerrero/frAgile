@@ -20,27 +20,54 @@ const SignUpPage = (props) => {
     };
 
     const registerUser = (event) => {
-        var user = formValues;
-        // see how to get email and passwords from the formValues
-        auth.createUserWithEmailAndPassword(user.email, user.password)
+        event.preventDefault();
+        console.log(formValues.email);
+        console.log(formValues.passwordOne);
+
+        auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
             .then(authUser => {
+                // Make the fields to their original state
                 setFormValues({});
                 setFields(["Username", "Email", "Password", "Confirm Password"]);
+
+                // Go to homepage when user are signed up
             })
             .catch(error => {
                 //do something
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                if (errorCode == 'auth/weak-password') {
+                    alert.show('The password should be at least 6 characters');
+                }
+
+                if(errorCode == 'auth/email-already-in-use'){
+                    alert.show('This email is already in used');
+                }
+
+                // Need to update this so that only authorized email (by admin) is considered valid
+                if(errorCode == 'auth/invalid-email'){
+                    alert.show('This email is not authorized, contact admin');
+                }
+
+                console.log(error);
             });
-        event.preventDefault();
     }
+
+    const isInvalid =
+        formValues.passwordOne !== formValues.passwordTwo ||
+        formValues.passwordOne === '' ||
+        formValues.email === '' ||
+        formValues.username === '';
 
     return (
         <div>
             <h1>SignUp</h1>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={event => registerUser(event)}>
                 <input
                     name="username"
-                    value={username}
-                    onChange={this.onChange}
+                    value={formValues.username}
+                    onChange={event => handleInputChange(event)}
                     type="text"
                     placeholder="Full Name"
                 />
@@ -48,8 +75,8 @@ const SignUpPage = (props) => {
                 <br/>
                 <input
                     name="email"
-                    value={email}
-                    onChange={this.onChange}
+                    value={formValues.email}
+                    onChange={event => handleInputChange(event)}
                     type="text"
                     placeholder="Email Address"
                 />
@@ -57,8 +84,8 @@ const SignUpPage = (props) => {
                 <br/>
                 <input
                     name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
+                    value={formValues.passwordOne}
+                    onChange={event => handleInputChange(event)}
                     type="password"
                     placeholder="Password"
                 />
@@ -66,108 +93,18 @@ const SignUpPage = (props) => {
                 <br/>
                 <input
                     name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
+                    value={formValues.passwordTwo}
+                    onChange={event => handleInputChange(event)}
                     type="password"
                     placeholder="Confirm Password"
                 />
                 <button disabled={isInvalid} type="submit">Sign Up</button>
-                {error && <p>{error.message}</p>}
+                {/*{error && <p>{error.message}</p>}*/}
             </form>
         </div>
     )
 };
 
-const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-};
-
-class SignUpForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { ...INITIAL_STATE };
-    }
-
-
-    onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
-        this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                this.setState({ ...INITIAL_STATE });
-            })
-            .catch(error => {
-                this.setState({ error });
-            });
-        event.preventDefault();
-    }
-
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value })
-    };
-
-    render() {
-        const {
-            username,
-            email,
-            passwordOne,
-            passwordTwo,
-            error,
-        } = this.state;
-
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            username === '';
-
-        return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    name="username"
-                    value={username}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Full Name"
-                />
-                <br/>
-                <br/>
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <br/>
-                <br/>
-                <input
-                    name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <br/>
-                <br/>
-                <input
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button disabled={isInvalid} type="submit">Sign Up</button>
-                {error && <p>{error.message}</p>}
-            </form>
-        );
-    }
-}
 const SignUpLink = () => (
     <p>
         Don't have an account? <Link to="/SignUp">Sign Up</Link>
@@ -175,4 +112,3 @@ const SignUpLink = () => (
 );
 export default SignUpPage;
 
-export { SignUpForm, SignUpLink };
