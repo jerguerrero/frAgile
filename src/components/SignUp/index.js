@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import { Link } from 'react-router-dom';
 import firebase from '../Firebase';
 import {useAlert} from "react-alert";
+import { Redirect } from 'react-router-dom';
 
 const SignUpPage = (props) => {
 
@@ -13,11 +14,21 @@ const SignUpPage = (props) => {
     const [formValues, setFormValues] = useState({});
     // State for extra input fields
     const [fields, setFields] = useState(["Username", "Email", "Password", "Confirm Password"]);
+    const [signUpStatus, setSignUpStatus] = useState(false);
 
     const handleInputChange = (event) => {
         //Adds new value
         setFormValues({...formValues, [event.target.name]: event.target.value});
     };
+
+    const renderRedirect = () => {
+        if(signUpStatus){
+            return <Redirect to='/' />
+        }
+        else{
+            return null;
+        }
+    }
 
     const registerUser = (event) => {
         event.preventDefault();
@@ -31,6 +42,8 @@ const SignUpPage = (props) => {
                 setFields(["Username", "Email", "Password", "Confirm Password"]);
 
                 // Go to homepage when user are signed up
+                setSignUpStatus(true);
+
             })
             .catch(error => {
                 //do something
@@ -62,6 +75,7 @@ const SignUpPage = (props) => {
 
     return (
         <div>
+            {renderRedirect()}
             <h1>SignUp</h1>
             <form onSubmit={event => registerUser(event)}>
                 <input

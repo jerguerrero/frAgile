@@ -15,7 +15,7 @@ import Login from '../Login';
 // for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 
-library.add(faHome, faFileUpload )
+library.add(faHome, faFileUpload );
 
 const App = (props) => {
 
