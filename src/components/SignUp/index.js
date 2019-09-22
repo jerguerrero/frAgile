@@ -86,7 +86,7 @@ const SignUpPage = (props) => {
                   justify="space-around"
                   alignItems="center"
                   spacing={4}>
-            <h1>SignUp</h1>
+
             <form onSubmit={event => registerUser(event)}>
                 {'Name: '}
                 <br/>
