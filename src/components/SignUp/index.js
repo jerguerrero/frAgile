@@ -76,7 +76,6 @@ const SignUpPage = (props) => {
     return (
         <div>
             {renderRedirect()}
-            <h1>SignUp</h1>
             <form onSubmit={event => registerUser(event)}>
                 <input
                     name="username"

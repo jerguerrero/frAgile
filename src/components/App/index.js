@@ -16,8 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import firebase from '../Firebase';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+
 // for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 
@@ -39,56 +38,20 @@ const App = (props) => {
         },
     }));
 
-    const [value, setValue] = React.useState(0);
-
-    function handleChange(event, newValue) {
-        setValue(newValue);
-    }
-
     const [user, setUser] = useState(null);
     const [currentTab, setCurrentTab] = useState(0);
     const classes = useStyles();
 
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-
-        return (
-            <Typography
-                component="div"
-                role="tabpanel"
-                hidden={value !== index}
-                id={`scrollable-auto-tabpanel-${index}`}
-                aria-labelledby={`scrollable-auto-tab-${index}`}
-                {...other}
-            >
-                <Box p={3}>{children}</Box>
-            </Typography>
-        );
-    }
-
-    TabPanel.propTypes = {
-        children: PropTypes.node,
-        index: PropTypes.any.isRequired,
-        value: PropTypes.any.isRequired,
-    };
-
-    function a11yProps(index) {
-        return {
-            id: `scrollable-auto-tab-${index}`,
-            'aria-controls': `scrollable-auto-tabpanel-${index}`,
-        };
-    }
-
-    const setTab = (index) => {
-        setCurrentTab(index);
-    }
 
     const renderTab = () => {
         if(currentTab === 0) {
-            return Login();
+            return <Login/>;
         }
         else if(currentTab === 1){
-            return SignUp();
+            return <SignUp/>;
+        }
+        else{
+            return null;
         }
     };
 
@@ -154,20 +117,12 @@ const App = (props) => {
                 >
                     <div>
                     <AppBar position="static">
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                        >
-                            <Tab label="Login" {...a11yProps(0)} />
-                            <Tab label="SignUp" {...a11yProps(1)} />
+                        <Tabs>
+                            <Tab label="Login" onClick={() => setCurrentTab(0)}/>
+                            <Tab label="SignUp" onClick={() => setCurrentTab(1)}/>
                         </Tabs>
                     </AppBar>
-                        <TabPanel value={value} index={0}>
-                            {Login()}
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            {SignUp()}
-                        </TabPanel>
+                        {renderTab()}
                     </div>
 
                 </Modal>
