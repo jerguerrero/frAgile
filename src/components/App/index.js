@@ -11,7 +11,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import Login from '../Login';
-
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import firebase from '../Firebase';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 // for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
@@ -20,7 +26,82 @@ library.add(faHome, faFileUpload );
 
 const App = (props) => {
 
+    const useStyles = makeStyles(theme => ({
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        paper: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+    }));
 
+    const [value, setValue] = React.useState(0);
+
+    function handleChange(event, newValue) {
+        setValue(newValue);
+    }
+
+    const [user, setUser] = useState(null);
+    const [currentTab, setCurrentTab] = useState(0);
+    const classes = useStyles();
+
+    function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+
+        return (
+            <Typography
+                component="div"
+                role="tabpanel"
+                hidden={value !== index}
+                id={`scrollable-auto-tabpanel-${index}`}
+                aria-labelledby={`scrollable-auto-tab-${index}`}
+                {...other}
+            >
+                <Box p={3}>{children}</Box>
+            </Typography>
+        );
+    }
+
+    TabPanel.propTypes = {
+        children: PropTypes.node,
+        index: PropTypes.any.isRequired,
+        value: PropTypes.any.isRequired,
+    };
+
+    function a11yProps(index) {
+        return {
+            id: `scrollable-auto-tab-${index}`,
+            'aria-controls': `scrollable-auto-tabpanel-${index}`,
+        };
+    }
+
+    const setTab = (index) => {
+        setCurrentTab(index);
+    }
+
+    const renderTab = () => {
+        if(currentTab === 0) {
+            return Login();
+        }
+        else if(currentTab === 1){
+            return SignUp();
+        }
+    };
+
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            setUser(user);
+        } else {
+            setUser(null);
+        }
+    });
+
+    console.log(user);
     return (
 
         <Router>
@@ -70,12 +151,38 @@ const App = (props) => {
 
                     </Grid>
                 </AppBar>
+                <Modal
+                    aria-labelledby="spring-modal-title"
+                    aria-describedby="spring-modal-description"
+                    className={classes.modal}
+                    open={!user}
+                >
+                    <div>
+                    <AppBar position="static">
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                        >
+                            <Tab label="Login" {...a11yProps(0)} />
+                            <Tab label="SignUp" {...a11yProps(1)} />
+                        </Tabs>
+                    </AppBar>
+                        <TabPanel value={value} index={0}>
+                            {Login()}
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            {SignUp()}
+                        </TabPanel>
+                    </div>
+
+                </Modal>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
 
                 {/*for testing only, should be deleted in the future*/}
                 <Route exact path="/SignUp" component={SignUp} />
+
 
             </div>
         </Router>
