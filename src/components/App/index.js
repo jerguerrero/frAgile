@@ -14,6 +14,7 @@ import Login from '../Login';
 
 // for testing only, should be deleted in the future
 import SignUp from '../SignUp';
+import LogOutButton from '../LogOut';
 
 library.add(faHome, faFileUpload );
 
@@ -61,6 +62,10 @@ const App = (props) => {
                         {/*for testing only, should be deleted in the future*/}
                         <Grid item>
                             <Link to="/SignUp">SignUp</Link>
+                        </Grid>
+                        {/*for testing only, should be deleted in the future*/}
+                        <Grid item>
+                            <LogOutButton/>
                         </Grid>
 
                     </Grid>
