@@ -6,7 +6,7 @@ const LogOutButton = () => {
     //const auth = firebase.auth();
 
     return (
-        <button type="button" onClick={firebase.auth().signOut()}>
+        <button type="button" onClick={() => firebase.auth().signOut()}>
             Log Out
         </button>
     )

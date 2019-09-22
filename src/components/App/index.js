@@ -26,6 +26,8 @@ library.add(faHome, faFileUpload );
 
 const App = (props) => {
 
+
+
     const useStyles = makeStyles(theme => ({
         modal: {
             display: 'flex',
@@ -49,6 +51,8 @@ const App = (props) => {
     const [user, setUser] = useState(null);
     const [currentTab, setCurrentTab] = useState(0);
     const classes = useStyles();
+
+    console.log(user);
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -168,10 +172,10 @@ const App = (props) => {
                         </Tabs>
                     </AppBar>
                         <TabPanel value={value} index={0}>
-                            {Login()}
+                            {<Login/>}
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            {SignUp()}
+                            {<SignUp/>}
                         </TabPanel>
                     </div>
 
