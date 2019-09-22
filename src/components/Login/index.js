@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import { Link } from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import firebase from '../Firebase';
 import {useAlert} from "react-alert";
 
@@ -13,11 +13,21 @@ const Login = () => {
     const [formValues, setFormValues] = useState({});
     // State for extra input fields
     const [fields, setFields] = useState(["Email", "Password"]);
+    const [signUpStatus, setSignUpStatus] = useState(false);
 
     const handleInputChange = (event) => {
         //Adds new value
         setFormValues({...formValues, [event.target.name]: event.target.value});
     };
+
+    const renderRedirect = () => {
+        if(signUpStatus){
+            return <Redirect to='/' />
+        }
+        else{
+            return null;
+        }
+    }
 
     const isInvalid = formValues.password === '' || formValues.email === '';
 
@@ -29,6 +39,7 @@ const Login = () => {
                 setFields(["Email", "Password"]);
 
                 // Go to homepage when user are signed up
+                setSignUpStatus(true);
             })
             .catch(error => {
                 //do something
@@ -50,6 +61,7 @@ const Login = () => {
 
     return (
         <div>
+            {renderRedirect()}
             <form onSubmit={event => loginUser(event)}>
                 <input
                     name="email"
