@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import firebase from '../Firebase';
 import {useAlert} from "react-alert";
 import { Redirect } from 'react-router-dom';
+import Grid from "@material-ui/core/Grid";
 
 const SignUpPage = (props) => {
 
@@ -15,6 +16,15 @@ const SignUpPage = (props) => {
     // State for extra input fields
     const [fields, setFields] = useState(["Username", "Email", "Password", "Confirm Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
+
+    const isInvalid =
+        formValues.passwordOne !== formValues.passwordTwo ||
+        formValues.passwordOne === '' ||
+        formValues.email === '' ||
+        formValues.username === '' ||
+        formValues.username === undefined ||
+        formValues.email === undefined ||
+        formValues.passwordOne === undefined;
 
     const handleInputChange = (event) => {
         //Adds new value
@@ -67,16 +77,19 @@ const SignUpPage = (props) => {
             });
     }
 
-    const isInvalid =
-        formValues.passwordOne !== formValues.passwordTwo ||
-        formValues.passwordOne === '' ||
-        formValues.email === '' ||
-        formValues.username === '';
 
     return (
         <div>
             {renderRedirect()}
+            <Grid container
+                  direction="column"
+                  justify="space-around"
+                  alignItems="center"
+                  spacing={4}>
+
             <form onSubmit={event => registerUser(event)}>
+                {'Name: '}
+                <br/>
                 <input
                     name="username"
                     value={formValues.username}
@@ -85,6 +98,7 @@ const SignUpPage = (props) => {
                     placeholder="Full Name"
                 />
                 <br/>
+                {'Email: '}
                 <br/>
                 <input
                     name="email"
@@ -94,6 +108,7 @@ const SignUpPage = (props) => {
                     placeholder="Email Address"
                 />
                 <br/>
+                {'Password: '}
                 <br/>
                 <input
                     name="passwordOne"
@@ -103,6 +118,7 @@ const SignUpPage = (props) => {
                     placeholder="Password"
                 />
                 <br/>
+                {'Repeat Password: '}
                 <br/>
                 <input
                     name="passwordTwo"
@@ -111,9 +127,11 @@ const SignUpPage = (props) => {
                     type="password"
                     placeholder="Confirm Password"
                 />
+                <br/>
                 <button disabled={isInvalid} type="submit">Sign Up</button>
                 {/*{error && <p>{error.message}</p>}*/}
             </form>
+            </Grid>
         </div>
     )
 };
