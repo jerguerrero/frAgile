@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import firebase from '../Firebase';
 import {useAlert} from "react-alert";
+import Grid from "@material-ui/core/Grid";
 
 const Login = () => {
 
@@ -10,10 +11,16 @@ const Login = () => {
     const alert = useAlert();
 
     // State for for form values
-    const [formValues, setFormValues] = useState({});
+    const [formValues, setFormValues] = useState(["", ""]);
     // State for extra input fields
     const [fields, setFields] = useState(["Email", "Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
+
+    console.log(formValues.email);
+    console.log(formValues.password);
+
+    const isInvalid = formValues.password === undefined || formValues.email === undefined ||
+        formValues.password === '' || formValues.email === '';
 
     const handleInputChange = (event) => {
         //Adds new value
@@ -29,7 +36,7 @@ const Login = () => {
         }
     }
 
-    const isInvalid = formValues.password === '' || formValues.email === '';
+
 
     const  loginUser = (event) => {
         auth.signInWithEmailAndPassword(formValues.email, formValues.password)
@@ -62,7 +69,15 @@ const Login = () => {
     return (
         <div>
             {renderRedirect()}
+            <Grid container
+                  direction="column"
+                  justify="space-around"
+                  alignItems="center"
+                  spacing={4}>
+            <h1>Login</h1>
             <form onSubmit={event => loginUser(event)}>
+                {'Email: '}
+                <br/>
                 <input
                     name="email"
                     value={formValues.email}
@@ -71,6 +86,7 @@ const Login = () => {
                     placeholder="Email Address"
                 />
                 <br/>
+                {'Password: '}
                 <br/>
                 <input
                     name="password"
@@ -80,11 +96,11 @@ const Login = () => {
                     placeholder="Password"
                 />
                 <br/>
-                <br/>
                 <button disabled={isInvalid} type="submit">
                     Sign In
                 </button>
             </form>
+            </Grid>
         </div>
     )
 };
