@@ -46,7 +46,7 @@ const Home = () => {
     const submitComment = () =>{
         if(comment){
             currentDocumentRef.collection("comments")
-                .add({comment})
+                .add({comment, timestamp: new Date()})
                 .then(() => {
                     console.log("Successfuly saved");
                     setComment("");
@@ -171,6 +171,7 @@ const Home = () => {
                                 return(
                                     <ListItem>
                                         {JSON.stringify(document.data().comment)}
+                                        {JSON.stringify(document.data().timestamp)}
                                     </ListItem>);
                             });
                         }
