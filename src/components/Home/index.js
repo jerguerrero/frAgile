@@ -11,6 +11,7 @@ import React, {useState} from 'react';
 import { useCollection} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
+import moment from "moment";
 
 const Home = () => {
 
@@ -46,7 +47,7 @@ const Home = () => {
     const submitComment = () =>{
         if(comment){
             currentDocumentRef.collection("comments")
-                .add({comment})
+                .add({comment, timestamp: moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a')})
                 .then(() => {
                     console.log("Successfuly saved");
                     setComment("");
@@ -68,6 +69,12 @@ const Home = () => {
     } else {
         button = null;
     }
+
+
+    // let var1 = comments.docs;
+    // console.log(var1, "HEREEEEEEEE");
+
+
 
 
     return (
@@ -171,6 +178,9 @@ const Home = () => {
                                 return(
                                     <ListItem>
                                         {JSON.stringify(document.data().comment)}
+                                        {", "}
+                                        {JSON.stringify(document.data().timestamp)}
+                                        {/*{comments.docs.toString()}*/}
                                     </ListItem>);
                             });
                         }
