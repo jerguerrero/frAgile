@@ -85,6 +85,12 @@ const Home = () => {
               alignItems="flex-start"
               spacing={4}>
             <Grid id={"leftpanelist"} item xs={2}>
+                <Card>
+                    <CardHeader
+                        style={{textAlign: "center"}}
+                        title="Description"
+                    />
+                </Card>
                 <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
                     {Object.keys(currentDocument).map(key => {
                         if(key==="imageUrl"){
