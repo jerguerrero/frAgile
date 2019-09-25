@@ -1,6 +1,5 @@
 #leftpanelist{
     background-color: #FFFFFF;
-    height: 50vh;
     border-radius: 2%;
     border-color: #DDDFE2;
     border-width: thick;
@@ -9,18 +8,17 @@
 
 #middlepane{
     background-color:  #FFFFFF;
-    height: 50vh;
     border-radius: 2%;
 }
 
 #middlepaneimage{
     background-color: #E7E3E1;
-    height: 100%;
+    height: 50vh;
+    object-fit: contain;
 }
 
 #rightpanelist{
     background-color:  #FFFFFF;
-    height: 50vh;
     border-radius: 2%;
 }
 
