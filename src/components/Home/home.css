@@ -15,6 +15,7 @@
     background-color: #E7E3E1;
     height: 50vh;
     object-fit: contain;
+    position: relative;
 }
 
 #rightpanelist{

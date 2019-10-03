@@ -12,6 +12,11 @@ import { useCollection} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
 import moment from "moment";
+import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Link} from "react-router-dom";
+library.add(faCaretLeft, faCaretRight);
 
 const Home = () => {
 
@@ -23,6 +28,7 @@ const Home = () => {
     const [currentImage, setCurrentImage] = useState(null);
     const [currentDocumentRef, setCurrentDocumentRef] = useState(null);
     const [comment, setComment] = useState("");
+    const [currentImages, setCurrentImages] = useState(null);
 
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
@@ -70,12 +76,19 @@ const Home = () => {
         button = null;
     }
 
+    const navigateImageLeft = () => {
+        var indexOfImage = currentImages.indexOf(currentImage);
+        if(indexOfImage >= 1){
+            setCurrentImage(currentImages[indexOfImage - 1]);
+        }
+    };
 
-    // let var1 = comments.docs;
-    // console.log(var1, "HEREEEEEEEE");
-
-
-
+    const navigateImageRight = () => {
+        var indexOfImage = currentImages.indexOf(currentImage);
+        if(indexOfImage < currentImages.length - 1){
+            setCurrentImage(currentImages[indexOfImage + 1]);
+        }
+    };
 
     return (
     <div id={"homecontainer"}>
@@ -116,6 +129,22 @@ const Home = () => {
                         id={"middlepaneimage"}
                         component="img"
                         image={currentImage}/>
+                        <FontAwesomeIcon
+                            style={{position: "absolute", bottom: '65vh', width: '25px', height: '25px'}}
+                            icon="caret-left"
+                            color={"white"}
+                            onClick={()=>{
+                                navigateImageLeft();
+                            }}
+                        />
+                        <FontAwesomeIcon
+                            style={{position: "absolute", right: '30.5vw', bottom: '65vh', width: '25px', height: '25px'}}
+                            icon="caret-right"
+                            color={"white"}
+                            onClick={()=>{
+                                navigateImageRight();
+                            }}
+                        />
 
             </Grid>
             <Grid id="rightpanelist" item xs={2}>
@@ -133,7 +162,8 @@ const Home = () => {
                                 <ListItem
                                     button
                                     onClick={()=>{
-                                        setCurrentImage(document.data().imageUrl);
+                                        setCurrentImage(document.data().imageUrl[0]);
+                                        setCurrentImages(document.data().imageUrl);
                                         setCurrentDocument(document.data());
                                         setCurrentArtifactID(document.id);
                                         setCurrentDocumentRef(document.ref);

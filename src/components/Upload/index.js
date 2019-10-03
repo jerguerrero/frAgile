@@ -18,8 +18,9 @@ const Upload = (props) => {
     // State for extra input fields
     const [fields, setFields] = useState(["Name", "Tags"]);
     const [label, setLabel] = useState(null);
-    const [image, setImage] = useState(null);
+    const [images, setImages] = useState(null);
     const [uploader, setUploader] = useState(null);
+    const [fileUploaded, setFileUploaded] = useState([]);
 
     const addInputField = (label) => {
         const values = [...fields];
@@ -42,10 +43,12 @@ const Upload = (props) => {
     };
 
     const handleChangeImage = (event) => {
-        const image = event.target.files[0];
-        if (image) {
-            setImage(image);
-        }
+        console.log(event.target.files);
+        const images = Array.from(event.target.files);
+        setImages(images);
+        // images.forEach(image => {
+        //     console.log(image);
+        // });
     };
 
     const createArtifactWithImage = (imageUrl) => {
@@ -63,25 +66,37 @@ const Upload = (props) => {
             });
     };
 
-    const handleUploadSuccess = async (filename, task) => {
+    const getDownloadURL =  async filename => {
         const imageUrl = await storage.child(filename).getDownloadURL()
             .catch(error => {
                 console.log(error);
             });
+        return imageUrl;
+    }
 
-        createArtifactWithImage(imageUrl);
-        document.getElementById("photoUploadForm").reset();
-        setFormValues({});
-        setFields(["Name", "Tags"]);
-        setImage(null);
-        setLabel(null);
+    const handleUploadSuccess = async (filenames, task) => {
+
+        const downloadURLs = filenames.map(filename => getDownloadURL(filename));
+        console.log(downloadURLs);
+
+        Promise.all(downloadURLs).then(function(downloadURLs) {
+            createArtifactWithImage(downloadURLs);
+            document.getElementById("photoUploadForm").reset();
+            setFormValues({});
+            setFields(["Name", "Tags"]);
+            // setImage(null);
+            setLabel(null);
+            setFileUploaded([]);
+            setImages(null);
+        });
+
 
     };
 
     const handleSubmit = (event) => {
         event.preventDefault ();
-        if (uploader && image) {
-            uploader.startUpload(image);
+        if (uploader && images) {
+            images.forEach(image => uploader.startUpload(image));
         }
     };
 
@@ -106,9 +121,18 @@ const Upload = (props) => {
                                 randomizeFilename
                                 storageRef={storage}
                                 onChange={handleChangeImage}
-                                onUploadSuccess={(filename, task) =>
-                                    handleUploadSuccess(filename, task)}
+                                onUploadSuccess={(filename, task) => {
+                                    var totalFileUploaded = fileUploaded;
+                                    totalFileUploaded.push(filename);
+                                    setFileUploaded(fileUploaded);
+
+                                    if(images.length === totalFileUploaded.length){
+                                        return handleUploadSuccess(totalFileUploaded, task)
+                                    }
+
+                                }}
                                 onUploadError={error => {console.log(error)}}
+                                multiple
                             />
                         <br/>
                         <br/>
