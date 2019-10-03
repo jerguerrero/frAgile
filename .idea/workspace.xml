@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Home/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Upload/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Upload/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +17,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/App/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
+            <state relative-caret-position="-332">
               <caret line="123" column="36" lean-forward="true" selection-start-line="123" selection-start-column="36" selection-end-line="123" selection-end-column="36" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
@@ -28,23 +27,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Home/index.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Home/home.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="140" column="75" selection-start-line="140" selection-start-column="75" selection-end-line="140" selection-end-column="75" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/@fortawesome/react-fontawesome/index.d.ts">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Home/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+            <state relative-caret-position="362">
+              <caret line="141" column="51" selection-start-line="141" selection-start-column="51" selection-end-line="141" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,15 +59,17 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onclick</find>
       <find>import si</find>
       <find>user</find>
       <find>logout</find>
       <find>setimages</find>
       <find>font</find>
       <find>fahome</find>
-      <find>icon</find>
       <find>tae</find>
+      <find>onclick</find>
+      <find>right</find>
+      <find>iconbutton</find>
+      <find>icon</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src</dir>
@@ -124,6 +125,27 @@
               <item name="node_modules" type="462c0819:PsiDirectoryNode" />
               <item name="@fortawesome" type="462c0819:PsiDirectoryNode" />
               <item name="react-fontawesome" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fragile" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fragile" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="@material-ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fragile" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fragile" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="@material-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fragile" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fragile" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="@material-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="IconButton" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="fragile" type="b2602c69:ProjectViewProjectNode" />
@@ -267,12 +289,12 @@
       <workItem from="1568716918839" duration="6719000" />
       <workItem from="1568852206225" duration="1174000" />
       <workItem from="1569306951366" duration="3224000" />
-      <workItem from="1570065396056" duration="9264000" />
+      <workItem from="1570065396056" duration="17515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15355000" />
+    <option name="totallyTimeSpent" value="23606000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,13 +423,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Home/home.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Upload/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-903">
@@ -425,9 +440,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@fortawesome/react-fontawesome/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/App/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
+        <state relative-caret-position="-332">
           <caret line="123" column="36" lean-forward="true" selection-start-line="123" selection-start-column="36" selection-end-line="123" selection-end-column="36" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -436,17 +458,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@fortawesome/react-fontawesome/index.d.ts">
+    <entry file="file://$PROJECT_DIR$/src/components/Home/home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/IconButton/IconButton.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="140" column="75" selection-start-line="140" selection-start-column="75" selection-end-line="140" selection-end-column="75" />
+        <state relative-caret-position="362">
+          <caret line="141" column="51" selection-start-line="141" selection-start-column="51" selection-end-line="141" selection-end-column="51" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>

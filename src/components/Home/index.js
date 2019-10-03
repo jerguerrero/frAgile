@@ -12,11 +12,12 @@ import { useCollection} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
 import moment from "moment";
-import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {faCaretLeft, faCaretRight, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Link} from "react-router-dom";
-library.add(faCaretLeft, faCaretRight);
+import IconButton from '@material-ui/core/IconButton';
+
+library.add(faCaretLeft, faCaretRight, faThumbsUp);
 
 const Home = () => {
 
@@ -97,57 +98,61 @@ const Home = () => {
               justify="space-evenly"
               alignItems="flex-start"
               spacing={4}>
-            <Grid id={"leftpanelist"} item xs={2}>
-                <Card>
-                    <CardHeader
-                        style={{textAlign: "center"}}
-                        title="Description"
-                    />
-                </Card>
-                <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
-                    {Object.keys(currentDocument).map(key => {
-                        if(key==="imageUrl"){
-                            return null;
-                        }
-                        else {
-                            return (
 
-                                <ListItem>
-                                    <ListItemText
-                                        primary={key}
-                                        secondary={currentDocument[key]}
-                                    />
-                                </ListItem>
-                            );
-                        }
-                    })}
-                </Infinite>
-            </Grid>
-            <Grid id={"middlepane"} item xs={5}>
-
+            <Grid id={"middlepane"} style={{position: 'relative'}} item xs={12} sm={8}>
+                <Grid item xs={12} >
                     <CardMedia
                         id={"middlepaneimage"}
                         component="img"
                         image={currentImage}/>
+
+
+                </Grid>
+                <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
+
+                <IconButton style={{position: 'absolute', bottom: '10px', width: '50px', height: '50px', border:  'solid', borderRadius: '200%', backgroundColor: "#E7E3E1"}} >
+                    <FontAwesomeIcon
+
+                        icon="thumbs-up"
+                        color={"#F87531"}
+
+                    />
+                </IconButton>
+                </Grid>
+                <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
+                    <Grid item xs={1}>
+                        <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}} onClick={()=>{
+                            navigateImageLeft();
+                        }}>
+                    <FontAwesomeIcon
+                        icon="caret-left"
+                        style={{width: '20px'}}
+                        color={"white"}
+                    />
+                        </IconButton>
+                    </Grid>
+                    <Grid item xs={10}>
+                    </Grid>
+                    <Grid item xs={1}  style={{textAlign: "right"}}>
+                        <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}}
+                                     onClick={()=>{
+                                         navigateImageRight();
+                                     }}>
                         <FontAwesomeIcon
-                            style={{position: "absolute", bottom: '65vh', width: '25px', height: '25px'}}
-                            icon="caret-left"
-                            color={"white"}
-                            onClick={()=>{
-                                navigateImageLeft();
-                            }}
-                        />
-                        <FontAwesomeIcon
-                            style={{position: "absolute", right: '30.5vw', bottom: '65vh', width: '25px', height: '25px'}}
+                            style={{width: '20px'}}
                             icon="caret-right"
                             color={"white"}
-                            onClick={()=>{
-                                navigateImageRight();
-                            }}
+
                         />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+
 
             </Grid>
-            <Grid id="rightpanelist" item xs={2}>
+
+            <Grid container justify="space-evenly" xs={12} sm={3}>
+                <Grid id="rightpanelist" item xs={12} md={12}>
                 <Card>
                     <CardHeader
                         style={{textAlign: "center"}}
@@ -174,15 +179,42 @@ const Home = () => {
                     }
                 })()}
                 </Infinite>
+                </Grid>
+                <Grid id={"leftpanelist"} item xs={12} md={12}>
+                    <Card>
+                        <CardHeader
+                            style={{textAlign: "center"}}
+                            title="Description"
+                        />
+                    </Card>
+                    <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
+                        {Object.keys(currentDocument).map(key => {
+                            if(key==="imageUrl"){
+                                return null;
+                            }
+                            else {
+                                return (
 
+                                    <ListItem>
+                                        <ListItemText
+                                            primary={key}
+                                            secondary={currentDocument[key]}
+                                        />
+                                    </ListItem>
+                                );
+                            }
+                        })}
+                    </Infinite>
+                </Grid>
             </Grid>
+
         </Grid>
         <Grid container
               direction="row"
               justify="space-evenly"
               alignItems="flex-start"
               spacing={4}>
-            <Grid item xs={5}>
+            <Grid item xs={12} sm={8}>
 
                     <TextField
                         id="standard-full-width"
@@ -199,13 +231,14 @@ const Home = () => {
                     />
 
             </Grid>
+            <Grid item xs={12} sm={3}/>
         </Grid>
         <Grid container
               direction="row"
               justify="space-evenly"
               alignItems="flex-start"
               spacing={4}>
-            <Grid item xs={5}>
+            <Grid item xs={12} sm={8}>
 
                 <Infinite containerHeight={200} elementHeight={60}>
                     {(() => {
@@ -222,8 +255,8 @@ const Home = () => {
                         }
                     })()}
                 </Infinite>
-
             </Grid>
+            <Grid item xs={12} sm={3}/>
         </Grid>
     </div>
     );
