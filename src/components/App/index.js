@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import  Upload  from '../Upload';
 import Home from '../Home';
+import Admin from '../Admin';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -144,6 +145,10 @@ const App = (props) => {
                             <Link to="/Login">Login</Link>
                         </Grid>
 
+                        <Grid item>
+                            <Link to="/Admin">Admin</Link>
+                        </Grid>
+
                         {/*for testing only, should be deleted in the future*/}
                         <Grid item>
                             <Link to="/SignUp">SignUp</Link>
@@ -183,6 +188,7 @@ const App = (props) => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
+                <Route exact path="/Admin" component={Admin} />
 
                 {/*for testing only, should be deleted in the future*/}
                 <Route exact path="/SignUp" component={SignUp} />
