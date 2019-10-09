@@ -5,6 +5,7 @@ import {useAlert} from "react-alert";
 import Grid from "@material-ui/core/Grid";
 import moment from "../Home";
 import {useCollection} from "react-firebase-hooks/firestore";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Admin = () => {
 
@@ -38,30 +39,56 @@ const Admin = () => {
     };
 
     return (
-        <div>
-            <Grid container
-                  direction="column"
-                  justify="space-around"
-                  alignItems="center"
-                  spacing={4}>
-                <h1>Admin Page</h1>
-                <form onSubmit={event => inviteUser(event)}>
-                    {'Invite user via email: '}
-                    <br/>
-                    <input
-                        name="email"
-                        value={formValues.email}
-                        onChange={event => handleInputChange(event)}
-                        type="text"
-                        placeholder="Type user email address here"
-                    />
-                    <br/>
-                    <button type="submit">
-                        Invite
-                    </button>
-                </form>
+
+        <Grid id={"adminContainer"}>
+        <Grid container
+              direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+              spacing={4}>
+
+            <Grid id={"sideNavigation"} style={{position: 'relative'}} item xs={3}>
+                <Grid container
+                      direction="column"
+                      justify="flex-start"
+                      alignItems="flex-start"
+                      spacing={2}>
+                    <Grid item>
+                        <Link to="/">Test1</Link>
+                    </Grid>
+                    <Grid item>
+                        <Link to="/">Test2</Link>
+                    </Grid>
+                </Grid>
             </Grid>
-        </div>
+
+            <Grid id={"userInvite"}>
+                <Grid container
+                      direction="column"
+                      justify="space-around"
+                      alignItems="center"
+                      spacing={4}>
+                    <h1>Admin Page</h1>
+                    <form onSubmit={event => inviteUser(event)}>
+                        {'Invite user via email: '}
+                        <br/>
+                        <input
+                            name="email"
+                            value={formValues.email}
+                            onChange={event => handleInputChange(event)}
+                            type="text"
+                            placeholder="Type user email address here"
+                        />
+                        <br/>
+                        <button type="submit">
+                            Invite
+                        </button>
+                    </form>
+                </Grid>
+            </Grid>
+
+        </Grid>
+        </Grid>
     )
 };
 export default Admin;
