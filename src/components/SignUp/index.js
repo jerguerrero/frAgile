@@ -4,10 +4,12 @@ import firebase from '../Firebase';
 import {useAlert} from "react-alert";
 import { Redirect } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
+import {useCollection} from "react-firebase-hooks/firestore";
 
 const SignUpPage = (props) => {
 
     const db = firebase.firestore();
+    const ref = firebase.database().ref("authEmails");
     const auth = firebase.auth();
     const alert = useAlert();
 
@@ -16,6 +18,13 @@ const SignUpPage = (props) => {
     // State for extra input fields
     const [fields, setFields] = useState(["Username", "Email", "Password", "Confirm Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
+
+    const [authEmails, authEmailsLoading, authEmailsError] = useCollection(
+        db.collection('authEmails'),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    );
 
     const isInvalid =
         formValues.passwordOne !== formValues.passwordTwo ||
@@ -43,38 +52,48 @@ const SignUpPage = (props) => {
     const registerUser = (event) => {
         event.preventDefault();
         console.log(formValues.email);
-        console.log(formValues.passwordOne);
+        // Only register user if they have been invited/authorised by admins
+        ref.orderByChild("email").equalTo(formValues.email).once("value",snapshot => {
+            if (snapshot.exists()){
+                console.log("Email exist in database");
+                auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
+                    .then(authUser => {
+                        // Make the fields to their original state
+                        setFormValues({});
+                        setFields(["Username", "Email", "Password", "Confirm Password"]);
 
-        auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
-            .then(authUser => {
-                // Make the fields to their original state
-                setFormValues({});
-                setFields(["Username", "Email", "Password", "Confirm Password"]);
+                        // Go to homepage when user are signed up
+                        setSignUpStatus(true);
 
-                // Go to homepage when user are signed up
-                setSignUpStatus(true);
+                    })
+                    .catch(error => {
+                        //do something
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
 
-            })
-            .catch(error => {
-                //do something
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                        if (errorCode == 'auth/weak-password') {
+                            alert.show('The password should be at least 6 characters');
+                        }
 
-                if (errorCode == 'auth/weak-password') {
-                    alert.show('The password should be at least 6 characters');
-                }
+                        if(errorCode == 'auth/email-already-in-use'){
+                            alert.show('This email is already in used');
+                        }
 
-                if(errorCode == 'auth/email-already-in-use'){
-                    alert.show('This email is already in used');
-                }
+                        // Need to update this so that only authorized email (by admin) is considered valid
+                        if(errorCode == 'auth/invalid-email'){
+                            alert.show('This email is not authorized, contact admin');
+                        }
 
-                // Need to update this so that only authorized email (by admin) is considered valid
-                if(errorCode == 'auth/invalid-email'){
-                    alert.show('This email is not authorized, contact admin');
-                }
+                        console.log(error);
+                    });
+            }else{
+                console.log("This email is not authorised, contact admin");
+                alert.show("This email is not authorised, contact admin");
+            }
+            console.log("THIS DOES NOT GET EXECUTED");
+        });
 
-                console.log(error);
-            });
+
     }
 
 
