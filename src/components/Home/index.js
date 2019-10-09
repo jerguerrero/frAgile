@@ -77,31 +77,31 @@ const Home = () => {
         button = null;
     }
 
-    let choosebigger = (i, j) => {
-        //console.log(i.data().timestamp);
-        //console.log(j);
-        let testvar1 = i.data().timestamp;
-        let testvar2 = j.data().timestamp;
-        console.log(testvar1);
-        console.log(testvar2);
-        if (testvar1 > testvar2) {
-            console.log("it is -1 !!!!");
+    /* choose larger function to re-arrange comments */
+    let chooselarger = (m, n) => {
+        let temp1 = m.data().timestamp;
+        let temp2 = n.data().timestamp;
+
+        /* if else statement that does the actual comparing */
+        if (temp1 > temp2) {
             return -1;
-        }
-        if (testvar1 < testvar2) {
-            console.log("it is 1 !!!!");
+        } else if (temp1 < temp2) {
             return 1;
+        } else if (temp1 === temp2) {
+            return 0;
+        } else {
+            return 0;
         }
-        return 0;
     };
-    let var1;
+    let num1;
     if(comments && !comments.empty) {
-        var1 = comments.docs;
-        console.log("----------");
-        var1.map(document => {
+        num1 = comments.docs;
+        num1.map(document => {
             console.log(document.data());
         });
-        var1.sort(choosebigger);
+
+        /* sort */
+        num1.sort(chooselarger);
 
     }
     const navigateImageLeft = () => {
@@ -270,7 +270,7 @@ const Home = () => {
                 <Infinite containerHeight={200} elementHeight={60}>
                     {(() => {
                         if(comments && !comments.empty){
-                            return var1.map(document => {
+                            return num1.map(document => {
                                 return(
                                     <ListItem>
                                         {JSON.stringify(document.data().comment)}
