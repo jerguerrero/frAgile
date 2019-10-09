@@ -54,7 +54,7 @@ const Home = () => {
     const submitComment = () =>{
         if(comment){
             currentDocumentRef.collection("comments")
-                .add({comment, timestamp: moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a')})
+                .add({comment, timestamp: Number(new Date().getTime())})
                 .then(() => {
                     console.log("Successfuly saved");
                     setComment("");
@@ -77,6 +77,33 @@ const Home = () => {
         button = null;
     }
 
+    let choosebigger = (i, j) => {
+        //console.log(i.data().timestamp);
+        //console.log(j);
+        let testvar1 = i.data().timestamp;
+        let testvar2 = j.data().timestamp;
+        console.log(testvar1);
+        console.log(testvar2);
+        if (testvar1 > testvar2) {
+            console.log("it is -1 !!!!");
+            return -1;
+        }
+        if (testvar1 < testvar2) {
+            console.log("it is 1 !!!!");
+            return 1;
+        }
+        return 0;
+    };
+    let var1;
+    if(comments && !comments.empty) {
+        var1 = comments.docs;
+        console.log("----------");
+        var1.map(document => {
+            console.log(document.data());
+        });
+        var1.sort(choosebigger);
+
+    }
     const navigateImageLeft = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
         if(indexOfImage >= 1){
@@ -243,12 +270,12 @@ const Home = () => {
                 <Infinite containerHeight={200} elementHeight={60}>
                     {(() => {
                         if(comments && !comments.empty){
-                            return comments.docs.map(document => {
+                            return var1.map(document => {
                                 return(
                                     <ListItem>
                                         {JSON.stringify(document.data().comment)}
                                         {", "}
-                                        {JSON.stringify(document.data().timestamp)}
+                                        {JSON.stringify(moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
                                         {/*{comments.docs.toString()}*/}
                                     </ListItem>);
                             });
