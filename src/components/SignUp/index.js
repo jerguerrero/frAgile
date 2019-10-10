@@ -4,7 +4,7 @@ import firebase from '../Firebase';
 import {useAlert} from "react-alert";
 import { Redirect } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
-import {useCollection} from "react-firebase-hooks/firestore";
+import {useCollection, useDocument} from "react-firebase-hooks/firestore";
 
 const SignUpPage = (props) => {
 
@@ -19,8 +19,8 @@ const SignUpPage = (props) => {
     const [fields, setFields] = useState(["Username", "Email", "Password", "Confirm Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
 
-    const [authEmails, authEmailsLoading, authEmailsError] = useCollection(
-        db.collection('authEmails'),
+    const [authEmails, authEmailsLoading, authEmailsError] = useDocument(
+        db.collection('authEmails').doc("emails"),
         {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
@@ -52,6 +52,14 @@ const SignUpPage = (props) => {
     const registerUser = (event) => {
         event.preventDefault();
         console.log(formValues.email);
+        console.log(ref);
+        console.log(authEmails);
+        if(authEmails.data().emails.includes(formValues.email)){
+            console.log("I AM IN THE EMAILS");
+        }
+        else{
+            console.log("THAT IS NOT WORKING");
+        }
         // Only register user if they have been invited/authorised by admins
         ref.orderByChild("email").equalTo(formValues.email).once("value",snapshot => {
             if (snapshot.exists()){

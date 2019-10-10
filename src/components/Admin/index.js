@@ -26,7 +26,10 @@ const Admin = () => {
         var authEmail = formValues;
         console.log(authEmail);
         db.collection("authEmails")
-            .add(authEmail)
+            .doc("emails")
+            .update({
+                emails: firebase.firestore.FieldValue.arrayUnion(authEmail)}
+            )
             .then(() => {
                 formValues.email = "";
                 console.log("Successfuly invited");
