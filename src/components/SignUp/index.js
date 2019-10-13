@@ -55,8 +55,26 @@ const SignUpPage = (props) => {
         // Only register user if they have been invited/authorised by admins
         if(authEmails.data().emails.includes(formValues.email)){
             console.log("I AM IN THE EMAILS");
+
+            // Create user in firebase authentication
             auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
                 .then(authUser => {
+
+                    // Store user information in firebase database
+                    var user = {
+                        Name: formValues.username,
+                        Email: formValues.email
+                    };
+                    console.log(user);
+                    db.collection("users")
+                        .add(user)
+                        .then(() => {
+                            console.log("User successfully stored");
+                        })
+                        .catch( error => {
+                            console.log(error);
+                        });
+
                     // Make the fields to their original state
                     setFormValues({});
                     setFields(["Username", "Email", "Password", "Confirm Password"]);
@@ -102,14 +120,14 @@ const SignUpPage = (props) => {
                   spacing={4}>
             <h1>SignUp</h1>
             <form onSubmit={event => registerUser(event)}>
-                {'Name: '}
+                {'Username: '}
                 <br/>
                 <input
                     name="username"
                     value={formValues.username}
                     onChange={event => handleInputChange(event)}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Username"
                 />
                 <br/>
                 {'Email: '}
