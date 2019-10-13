@@ -51,16 +51,15 @@ const SignUpPage = (props) => {
 
     const registerUser = (event) => {
         event.preventDefault();
-        console.log(formValues.email);
-        console.log(ref);
-        console.log(authEmails);
+
+        // Only register user if they have been invited/authorised by admins
         if(authEmails.data().emails.includes(formValues.email)){
             console.log("I AM IN THE EMAILS");
         }
         else{
             console.log("THAT IS NOT WORKING");
         }
-        // Only register user if they have been invited/authorised by admins
+
         ref.orderByChild("email").equalTo(formValues.email).once("value",snapshot => {
             if (snapshot.exists()){
                 console.log("Email exist in database");

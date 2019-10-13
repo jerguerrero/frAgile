@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
-import firebase from '../Firebase';
+import * as firebase from 'firebase';
 import {useAlert} from "react-alert";
 import Grid from "@material-ui/core/Grid";
 import moment from "../Home";
@@ -23,13 +23,11 @@ const Admin = () => {
 
     const  inviteUser = (event) => {
         event.preventDefault();
-        var authEmail = formValues;
-        console.log(authEmail);
         db.collection("authEmails")
             .doc("emails")
             .update({
-                emails: firebase.firestore.FieldValue.arrayUnion(authEmail)}
-            )
+                emails: firebase.firestore.FieldValue.arrayUnion(formValues.email)
+            })
             .then(() => {
                 formValues.email = "";
                 console.log("Successfuly invited");
