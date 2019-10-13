@@ -55,52 +55,40 @@ const SignUpPage = (props) => {
         // Only register user if they have been invited/authorised by admins
         if(authEmails.data().emails.includes(formValues.email)){
             console.log("I AM IN THE EMAILS");
+            auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
+                .then(authUser => {
+                    // Make the fields to their original state
+                    setFormValues({});
+                    setFields(["Username", "Email", "Password", "Confirm Password"]);
+
+                    // Go to homepage when user are signed up
+                    setSignUpStatus(true);
+
+                })
+                .catch(error => {
+                    //do something
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+
+                    if (errorCode == 'auth/weak-password') {
+                        alert.show('The password should be at least 6 characters');
+                    }
+
+                    if(errorCode == 'auth/email-already-in-use'){
+                        alert.show('This email is already in used');
+                    }
+
+                    // Need to update this so that only authorized email (by admin) is considered valid
+                    if(errorCode == 'auth/invalid-email'){
+                        alert.show('This email is not authorized, contact admin');
+                    }
+
+                    console.log(error);
+                });
         }
         else{
             console.log("THAT IS NOT WORKING");
         }
-
-        ref.orderByChild("email").equalTo(formValues.email).once("value",snapshot => {
-            if (snapshot.exists()){
-                console.log("Email exist in database");
-                auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
-                    .then(authUser => {
-                        // Make the fields to their original state
-                        setFormValues({});
-                        setFields(["Username", "Email", "Password", "Confirm Password"]);
-
-                        // Go to homepage when user are signed up
-                        setSignUpStatus(true);
-
-                    })
-                    .catch(error => {
-                        //do something
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-
-                        if (errorCode == 'auth/weak-password') {
-                            alert.show('The password should be at least 6 characters');
-                        }
-
-                        if(errorCode == 'auth/email-already-in-use'){
-                            alert.show('This email is already in used');
-                        }
-
-                        // Need to update this so that only authorized email (by admin) is considered valid
-                        if(errorCode == 'auth/invalid-email'){
-                            alert.show('This email is not authorized, contact admin');
-                        }
-
-                        console.log(error);
-                    });
-            }else{
-                console.log("This email is not authorised, contact admin");
-                alert.show("This email is not authorised, contact admin");
-            }
-            console.log("THIS DOES NOT GET EXECUTED");
-        });
-
-
     }
 
 
