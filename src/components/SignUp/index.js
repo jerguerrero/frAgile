@@ -4,18 +4,27 @@ import firebase from '../Firebase';
 import {useAlert} from "react-alert";
 import { Redirect } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
+import {useCollection, useDocument} from "react-firebase-hooks/firestore";
 
 const SignUpPage = (props) => {
 
     const db = firebase.firestore();
+    const ref = firebase.database().ref("authEmails");
     const auth = firebase.auth();
-    const alert = useAlert();
+    const alertAlternative = useAlert();
 
     // State for for form values
     const [formValues, setFormValues] = useState({});
     // State for extra input fields
     const [fields, setFields] = useState(["Username", "Email", "Password", "Confirm Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
+
+    const [authEmails, authEmailsLoading, authEmailsError] = useDocument(
+        db.collection('authEmails').doc("emails"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    );
 
     const isInvalid =
         formValues.passwordOne !== formValues.passwordTwo ||
@@ -42,39 +51,71 @@ const SignUpPage = (props) => {
 
     const registerUser = (event) => {
         event.preventDefault();
-        console.log(formValues.email);
-        console.log(formValues.passwordOne);
 
-        auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
-            .then(authUser => {
-                // Make the fields to their original state
-                setFormValues({});
-                setFields(["Username", "Email", "Password", "Confirm Password"]);
+        // Only register user if they have been invited/authorised by admins
+        if(authEmails.data().emails.includes(formValues.email)){
 
-                // Go to homepage when user are signed up
-                setSignUpStatus(true);
+            // Create user in firebase authentication
+            auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
+                .then(authUser => {
 
-            })
-            .catch(error => {
-                //do something
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                    console.log(authUser);
+                    // Store user information in firebase database
+                    var user = {
+                        Name: formValues.username,
+                        Email: formValues.email
+                    };
 
-                if (errorCode == 'auth/weak-password') {
-                    alert.show('The password should be at least 6 characters');
-                }
+                    if(authUser){
+                        authUser.user.updateProfile({
+                            displayName: formValues.username
+                        })
+                            .then(alert)
+                            .catch(alert);
+                    }
 
-                if(errorCode == 'auth/email-already-in-use'){
-                    alert.show('This email is already in used');
-                }
+                    db.collection("users")
+                        .doc(authUser.user.uid)
+                        .set(user)
+                        .then(() => {
+                            alert("User Successfully Created");
+                        })
+                        .catch( error => {
+                            alert(error);
+                        });
 
-                // Need to update this so that only authorized email (by admin) is considered valid
-                if(errorCode == 'auth/invalid-email'){
-                    alert.show('This email is not authorized, contact admin');
-                }
+                    // Make the fields to their original state
+                    setFormValues({});
+                    setFields(["Username", "Email", "Password", "Confirm Password"]);
 
-                console.log(error);
-            });
+                    // Go to homepage when user are signed up
+                    setSignUpStatus(true);
+
+                })
+                .catch(error => {
+                    //do something
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+
+                    if (errorCode == 'auth/weak-password') {
+                        alertAlternative.show('The password should be at least 6 characters');
+                    }
+
+                    if(errorCode == 'auth/email-already-in-use'){
+                        alertAlternative.show('This email is already in used');
+                    }
+
+                    // Need to update this so that only authorized email (by admin) is considered valid
+                    if(errorCode == 'auth/invalid-email'){
+                        alertAlternative.show('This email is not authorized, contact admin');
+                    }
+
+                    console.log(error);
+                });
+        }
+        else{
+            alert('The email is not authorized to sign up please contact admin');
+        }
     }
 
 
@@ -88,14 +129,14 @@ const SignUpPage = (props) => {
                   spacing={4}>
             <h1>SignUp</h1>
             <form onSubmit={event => registerUser(event)}>
-                {'Name: '}
+                {'Display Name: '}
                 <br/>
                 <input
                     name="username"
                     value={formValues.username}
                     onChange={event => handleInputChange(event)}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Username"
                 />
                 <br/>
                 {'Email: '}
