@@ -8,7 +8,7 @@ import Infinite from "react-infinite";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import React, {useState} from 'react';
-import { useCollection} from 'react-firebase-hooks/firestore';
+import { useCollection, useDocumentData} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
 import moment from "moment";
@@ -19,10 +19,11 @@ import IconButton from '@material-ui/core/IconButton';
 
 library.add(faCaretLeft, faCaretRight, faThumbsUp);
 
-const Home = () => {
+const Home = (user) => {
+
+    console.log(user);
 
     const db = firebase.firestore();
-
 
     const [currentDocument, setCurrentDocument] = useState({});
     const [currentArtifactID, setCurrentArtifactID] = useState(" ");
@@ -47,6 +48,15 @@ const Home = () => {
         }
     );
 
+    const [userInfo, userInfoLoading, userInfoError] = useDocumentData(
+        db.collection('users')
+            .doc(user.user? user.user.uid : 'dd'),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    );
+
+    console.log(userInfo);
     const handleCommentChange = (event) =>{
         setComment(event.target.value);
     };
@@ -118,6 +128,18 @@ const Home = () => {
         }
     };
 
+    const addLike = () => {
+        db.collection("artifacts")
+            .doc(currentArtifactID)
+            .collection("likes")
+            .add({
+                name: user.user.displayName,
+                timestamp: new Date(),
+                email: user.user.email,
+            })
+    };
+
+
     return (
     <div id={"homecontainer"}>
         <Grid container
@@ -137,9 +159,17 @@ const Home = () => {
                 </Grid>
                 <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
 
-                <IconButton style={{position: 'absolute', bottom: '10px', width: '50px', height: '50px', border:  'solid', borderRadius: '200%', backgroundColor: "#E7E3E1"}} >
+                <IconButton
+                    onClick={() => addLike()}
+                    style={{
+                        position: 'absolute',
+                        bottom: '10px',
+                        width: '50px',
+                        height: '50px',
+                        border:  'solid',
+                        borderRadius: '200%',
+                        backgroundColor: "#E7E3E1"}}>
                     <FontAwesomeIcon
-
                         icon="thumbs-up"
                         color={"#F87531"}
 
