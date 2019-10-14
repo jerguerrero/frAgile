@@ -129,7 +129,7 @@ const SignUpPage = (props) => {
                   spacing={4}>
             <h1>SignUp</h1>
             <form onSubmit={event => registerUser(event)}>
-                {'Username: '}
+                {'Display Name: '}
                 <br/>
                 <input
                     name="username"

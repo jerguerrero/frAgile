@@ -64,7 +64,7 @@ const Home = (user) => {
     const submitComment = () =>{
         if(comment){
             currentDocumentRef.collection("comments")
-                .add({comment, timestamp: Number(new Date().getTime())})
+                .add({user: user.user.displayName, uid: user.user.uid ,comment, timestamp: Number(new Date().getTime())})
                 .then(() => {
                     console.log("Successfuly saved");
                     setComment("");
@@ -161,6 +161,7 @@ const Home = (user) => {
 
                 <IconButton
                     onClick={() => addLike()}
+                    disabled={true}
                     style={{
                         position: 'absolute',
                         bottom: '10px',
@@ -303,7 +304,9 @@ const Home = (user) => {
                             return num1.map(document => {
                                 return(
                                     <ListItem>
-                                        {JSON.stringify(document.data().comment)}
+                                        {document.data().user}
+                                        {":"}
+                                        {document.data().comment}
                                         {", "}
                                         {JSON.stringify(moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
                                         {/*{comments.docs.toString()}*/}
