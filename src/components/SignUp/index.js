@@ -11,7 +11,7 @@ const SignUpPage = (props) => {
     const db = firebase.firestore();
     const ref = firebase.database().ref("authEmails");
     const auth = firebase.auth();
-    const alert = useAlert();
+    const alertAlternative = useAlert();
 
     // State for for form values
     const [formValues, setFormValues] = useState({});
@@ -89,23 +89,23 @@ const SignUpPage = (props) => {
                     var errorMessage = error.message;
 
                     if (errorCode == 'auth/weak-password') {
-                        alert.show('The password should be at least 6 characters');
+                        alertAlternative.show('The password should be at least 6 characters');
                     }
 
                     if(errorCode == 'auth/email-already-in-use'){
-                        alert.show('This email is already in used');
+                        alertAlternative.show('This email is already in used');
                     }
 
                     // Need to update this so that only authorized email (by admin) is considered valid
                     if(errorCode == 'auth/invalid-email'){
-                        alert.show('This email is not authorized, contact admin');
+                        alertAlternative.show('This email is not authorized, contact admin');
                     }
 
                     console.log(error);
                 });
         }
         else{
-            console.log("THAT IS NOT WORKING");
+            alert('The email is not authorized to sign up please contact admin');
         }
     }
 
