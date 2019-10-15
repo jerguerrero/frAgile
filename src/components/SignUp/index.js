@@ -59,7 +59,6 @@ const SignUpPage = (props) => {
             auth.createUserWithEmailAndPassword(formValues.email, formValues.passwordOne)
                 .then(authUser => {
 
-                    console.log(authUser);
                     // Store user information in firebase database
                     var user = {
                         Name: formValues.username,

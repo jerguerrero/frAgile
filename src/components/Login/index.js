@@ -16,9 +16,6 @@ const Login = () => {
     const [fields, setFields] = useState(["Email", "Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
 
-    console.log(formValues.email);
-    console.log(formValues.password);
-
     const isInvalid = formValues.password === undefined || formValues.email === undefined ||
         formValues.password === '' || formValues.email === '';
 
