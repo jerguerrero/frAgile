@@ -41,6 +41,11 @@ const ArtifactManagement = () => {
         }
     );
 
+    // Change owner registered for the artifact on the databse
+    const passDownArtifact = () =>{
+        console.log("OWNER CHANGED")
+    };
+
     let num1;
     if(likes && !likes.empty) {
         num1 = likes.docs;
@@ -140,7 +145,12 @@ const ArtifactManagement = () => {
                   alignItems="flex-start"
                   spacing={4}>
                 <Grid item xs={12} sm={8}>
-
+                    <Card>
+                        <CardHeader
+                            style={{textAlign: "center"}}
+                            title="Inheritance Candidate"
+                        />
+                    </Card>
                     <Infinite containerHeight={200} elementHeight={60}>
                         {(() => {
                             if(likes && !likes.empty){
@@ -150,6 +160,10 @@ const ArtifactManagement = () => {
                                             {document.data().name}
                                             {":"}
                                             {"document.data().reason"}
+                                            <button
+                                                onClick={passDownArtifact}>
+                                                {"Pass Down"}
+                                            </button>
                                         </ListItem>);
                                 });
                             }
