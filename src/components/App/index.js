@@ -27,8 +27,6 @@ library.add(faHome, faFileUpload );
 
 const App = (props) => {
 
-
-
     const useStyles = makeStyles(theme => ({
         modal: {
             display: 'flex',
@@ -98,6 +96,8 @@ const App = (props) => {
         }
     };
 
+
+
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             setUser(user);
@@ -105,6 +105,7 @@ const App = (props) => {
             setUser(null);
         }
     });
+
 
     console.log(user);
     return (
@@ -185,7 +186,9 @@ const App = (props) => {
                     </div>
 
                 </Modal>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/"
+                       render={(props) => <Home {...props} user={user} />}
+                />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
                 <Route exact path="/Admin" component={Admin} />
