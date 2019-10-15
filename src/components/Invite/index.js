@@ -3,9 +3,8 @@ import {Link, Redirect} from 'react-router-dom';
 import * as firebase from 'firebase';
 import {useAlert} from "react-alert";
 import Grid from "@material-ui/core/Grid";
-import Invite from '../Invite';
 
-const Admin = () => {
+const Invite = () => {
 
     const db = firebase.firestore();
     const auth = firebase.auth();
@@ -19,6 +18,7 @@ const Admin = () => {
         setFormValues({...formValues, [event.target.name]: event.target.value});
     };
 
+    // add emails into authEmails in firebase as an array
     const  inviteUser = (event) => {
         event.preventDefault();
         db.collection("authEmails")
@@ -39,32 +39,28 @@ const Admin = () => {
 
     return (
 
-        <Grid id={"adminContainer"}>
         <Grid container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
+              direction="column"
+              justify="space-around"
+              alignItems="center"
               spacing={4}>
-
-            <Grid id={"sideNavigation"} style={{position: 'relative'}} item xs={3}>
-                <Grid container
-                      direction="column"
-                      justify="flex-start"
-                      alignItems="flex-start"
-                      spacing={2}>
-                    <Grid item>
-                        <Link to="/">Test1</Link>
-                    </Grid>
-                    <Grid item>
-                        <Link to="/">Test2</Link>
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            <Invite/>
-
-        </Grid>
+            <h1>Admin Page</h1>
+            <form onSubmit={event => inviteUser(event)}>
+                {'Invite user via email: '}
+                <br/>
+                <input
+                    name="email"
+                    value={formValues.email}
+                    onChange={event => handleInputChange(event)}
+                    type="text"
+                    placeholder="Type user email address here"
+                />
+                <br/>
+                <button type="submit">
+                    Invite
+                </button>
+            </form>
         </Grid>
     )
 };
-export default Admin;
+export default Invite;

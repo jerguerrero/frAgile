@@ -161,7 +161,7 @@ const Home = (user) => {
 
                 <IconButton
                     onClick={() => addLike()}
-                    disabled={true}
+                    // disabled={true}
                     style={{
                         position: 'absolute',
                         bottom: '10px',
