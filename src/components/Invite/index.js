@@ -7,7 +7,6 @@ import Grid from "@material-ui/core/Grid";
 const Invite = () => {
 
     const db = firebase.firestore();
-    const auth = firebase.auth();
     const alert = useAlert();
 
     // State for for form values
@@ -44,7 +43,7 @@ const Invite = () => {
               justify="space-around"
               alignItems="center"
               spacing={4}>
-            <h1>Admin Page</h1>
+            <h1>Invite User</h1>
             <form onSubmit={event => inviteUser(event)}>
                 {'Invite user via email: '}
                 <br/>

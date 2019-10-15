@@ -19,9 +19,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
+
+// for testing only, should be deleted in the future
+import Invite from '../Invite';
+import ArtifactManagement from '../ArtifactManagement';
 
 library.add(faHome, faFileUpload );
 
@@ -146,15 +149,26 @@ const App = (props) => {
                             <Link to="/Login">Login</Link>
                         </Grid>
 
+
+
+                        {/*for testing only, should be deleted in the future*/}
                         <Grid item>
-                            <Link to="/Admin">Admin</Link>
+                            <Link to="/Invite">Invite User</Link>
                         </Grid>
 
                         {/*for testing only, should be deleted in the future*/}
                         <Grid item>
+                            <Link to="/ArtifactManagement">Artifact Management</Link>
+                        </Grid>
+
+                        <Grid item>
+                            <Link to="/Admin">Admin</Link>
+                        </Grid>
+
+                        <Grid item>
                             <Link to="/SignUp">SignUp</Link>
                         </Grid>
-                        {/*for testing only, should be deleted in the future*/}
+
                         <Grid item>
                             <LogOutButton/>
                         </Grid>
@@ -192,9 +206,11 @@ const App = (props) => {
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
                 <Route exact path="/Admin" component={Admin} />
+                <Route exact path="/SignUp" component={SignUp} />
 
                 {/*for testing only, should be deleted in the future*/}
-                <Route exact path="/SignUp" component={SignUp} />
+                <Route exact path="/Invite" component={Invite} />
+                <Route exact path="/ArtifactManagement" component={ArtifactManagement} />
 
 
             </div>
