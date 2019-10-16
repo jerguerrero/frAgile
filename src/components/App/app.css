@@ -22,5 +22,31 @@ text{
 #loginModal{
     align-items: center;
     justify-content: center;
-    color: white;
+    background-color: white;
+    padding: 1em;
+
+}
+
+#modalAppBar {
+    background-color: white;
+    color: black;
+    padding: 1em;
+    align-items: center;
+}
+
+#welcome {
+    background-color: white;
+    padding: 1em;
+}
+
+#modalTabs {
+    background-color:white;
+}
+
+#authModal {
+    background-color: white;
+}
+
+#authModal div {
+    background-color: white;
 }

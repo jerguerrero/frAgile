@@ -150,6 +150,8 @@ const App = (props) => {
                             <Link to="/Admin">Admin</Link>
                         </Grid>
 
+
+
                         {/*for testing only, should be deleted in the future*/}
                         <Grid item>
                             <Link to="/SignUp">SignUp</Link>
@@ -159,22 +161,32 @@ const App = (props) => {
                             <LogOutButton/>
                         </Grid>
 
+
+                        <Grid item>
+                            <h1>Heirloom</h1>
+                        </Grid>
+
                     </Grid>
                 </AppBar>
                 <Modal
+                    id={"authModal"}
                     aria-labelledby="spring-modal-title"
                     aria-describedby="spring-modal-description"
                     className={classes.modal}
                     open={!user}
+
                 >
                     <div>
-                    <AppBar position="static">
+                        <Grid container id={"welcome"}>
+                            <Grid item><h1>Welcome to Heirloom</h1></Grid>
+                        </Grid>
+                    <AppBar id={"modalAppBar"} position="static">
                         <Tabs
                             value={value}
                             onChange={handleChange}
                         >
                             <Tab label="Login" {...a11yProps(0)} />
-                            <Tab label="SignUp" {...a11yProps(1)} />
+                            <Tab label="Sign Up" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
                         <TabPanel value={value} index={0}>
