@@ -85,6 +85,7 @@ const ArtifactManagement = () => {
                         <Infinite containerHeight={200} elementHeight={60}>
                             {(() => {
                                 if(artifacts){
+                                    // Change this into artifacts that has subcollection 'likes' only
                                     return artifacts.docs.map(document => {
                                         return(
                                             <ListItem
