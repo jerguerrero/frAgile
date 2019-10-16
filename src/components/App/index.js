@@ -22,6 +22,9 @@ import Box from '@material-ui/core/Box';
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 // for testing only, should be deleted in the future
 import Invite from '../Invite';
 import ArtifactManagement from '../ArtifactManagement';
@@ -43,6 +46,16 @@ const App = (props) => {
             padding: theme.spacing(2, 4, 3),
         },
     }));
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const [value, setValue] = React.useState(0);
 
@@ -145,28 +158,29 @@ const App = (props) => {
                                 </text>
                             </Link>
                         </Grid>
-                        <Grid item>
-                            <Link to="/Login">Login</Link>
-                        </Grid>
-
-
-
-                        {/*for testing only, should be deleted in the future*/}
-                        <Grid item>
-                            <Link to="/Invite">Invite User</Link>
-                        </Grid>
-
-                        {/*for testing only, should be deleted in the future*/}
-                        <Grid item>
-                            <Link to="/ArtifactManagement">Artifact Management</Link>
-                        </Grid>
 
                         <Grid item>
-                            <Link to="/Admin">Admin</Link>
+                            <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
+                                Admin
+                            </Button>
+                            <Menu
+                                id="admin-bar"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                            </Menu>
                         </Grid>
 
                         <Grid item>
                             <Link to="/SignUp">SignUp</Link>
+                        </Grid>
+
+                        <Grid item>
+                            <Link to="/Login">Login</Link>
                         </Grid>
 
                         <Grid item>
