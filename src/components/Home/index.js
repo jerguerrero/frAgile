@@ -308,7 +308,7 @@ const Home = (user) => {
                                         {":"}
                                         {document.data().comment}
                                         {", "}
-                                        {JSON.stringify(moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
+                                        {JSON.stringify(moment(Number(new Date(document.data().timestamp).getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
                                         {/*{comments.docs.toString()}*/}
                                     </ListItem>);
                             });
