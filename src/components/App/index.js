@@ -22,6 +22,7 @@ import Box from '@material-ui/core/Box';
 // for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
+import {get} from 'lodash';
 
 library.add(faHome, faFileUpload );
 
@@ -51,7 +52,6 @@ const App = (props) => {
     const [currentTab, setCurrentTab] = useState(0);
     const classes = useStyles();
 
-    console.log(user);
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -106,8 +106,6 @@ const App = (props) => {
         }
     });
 
-
-    console.log(user);
     return (
 
         <Router>
@@ -164,6 +162,11 @@ const App = (props) => {
 
                         <Grid item>
                             <h1>Heirloom</h1>
+                        </Grid>
+
+
+                        <Grid item style={{position: 'absolute', right: '30px'}}>
+                            <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
                         </Grid>
 
                     </Grid>
