@@ -122,6 +122,26 @@ const App = (props) => {
         }
     });
 
+    const userMenu = () => {
+        if(get(user, 'uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
+            return (
+                <>
+                    <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+                </>
+            );
+        }
+        else{
+            return (
+                <>
+                    <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+                </>
+            );
+        }
+
+    }
+
     return (
 
         <Router>
@@ -132,38 +152,40 @@ const App = (props) => {
                           justify="flex-start"
                           alignItems="center"
                           spacing={2}>
-                        <Grid item>
-                            <Link to="/" class={"button"}>
-                                <FontAwesomeIcon
-                                    icon="home"
-                                    size="xl"
-                                    color={"white"}
-                                />
-                                <text>
-                                    {" Home"}
-                                </text>
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link to="/Upload" class={"button"}>
-                                <FontAwesomeIcon
-                                    icon="file-upload"
-                                    size="xl"
-                                    color={"white"}
-                                />
-                                <text>
-                                    {" Upload"}
-                                </text>
-                            </Link>
-                        </Grid>
+                        {/*<Grid item>*/}
+                            {/*<Link to="/" class={"button"}>*/}
+                                {/*<FontAwesomeIcon*/}
+                                    {/*icon="home"*/}
+                                    {/*size="xl"*/}
+                                    {/*color={"white"}*/}
+                                {/*/>*/}
+                                {/*<text>*/}
+                                    {/*{" Home"}*/}
+                                {/*</text>*/}
+                            {/*</Link>*/}
+                        {/*</Grid>*/}
+                        {/*<Grid item>*/}
+                            {/*<Link to="/Upload" class={"button"}>*/}
+                                {/*<FontAwesomeIcon*/}
+                                    {/*icon="file-upload"*/}
+                                    {/*size="xl"*/}
+                                    {/*color={"white"}*/}
+                                {/*/>*/}
+                                {/*<text>*/}
+                                    {/*{" Upload"}*/}
+                                {/*</text>*/}
+                            {/*</Link>*/}
+                        {/*</Grid>*/}
 
                         <Grid item>
-                            <h1>Heirloom</h1>
+                            <Link to="/" class={"button"}>
+                                <h1 style={{color: 'white'}}>{"Heirloom"}</h1>
+                            </Link>
                         </Grid>
 
                         <Grid item style={{position: 'absolute', right: '30px'}}>
                             <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
-                                <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
+                                <h4 style={{color: 'white'}}>{"Hi "}{get(user, 'displayName', "user")}</h4>
                             </Button>
                             <Menu
                                 id="admin-bar"
@@ -172,9 +194,8 @@ const App = (props) => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+
+                                {userMenu()}
                             </Menu>
                         </Grid>
 
