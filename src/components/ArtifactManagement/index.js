@@ -171,7 +171,7 @@ const ArtifactManagement = () => {
                                         <ListItem>
                                             {document.data().name}
                                             {":"}
-                                            {"document.data().reason"}
+                                            {document.data().reason}
                                             <button
                                                 onClick={passDownArtifact}>
                                                 {"Pass Down"}

@@ -19,6 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 import  Upload  from '../Upload';
 import Modal from '@material-ui/core/Modal';
 import List from '@material-ui/core/List';
+import {makeStyles} from "@material-ui/core";
 library.add(faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle);
 
 const Home = (user) => {
@@ -33,6 +34,18 @@ const Home = (user) => {
     const [comment, setComment] = useState("");
     const [currentImages, setCurrentImages] = useState(null);
     const [openUploadForm, setOpenUploadForm] = useState(false);
+    const [openLikeForm, setOpenLikeForm] = useState(false);
+
+    // State for for form values
+    const [formValues, setFormValues] = useState(["", ""]);
+
+    const isInvalid = formValues.reason === undefined || formValues.reason === '';
+
+    const handleInputChange = (event) => {
+        //Adds new value
+        setFormValues({...formValues, [event.target.name]: event.target.value});
+    };
+
 
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
@@ -57,6 +70,22 @@ const Home = (user) => {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
+
+    const useStyles = makeStyles(theme => ({
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        paper: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+    }));
+
+    const classes = useStyles();
 
     const handleCommentChange = (event) =>{
         setComment(event.target.value);
@@ -83,6 +112,15 @@ const Home = (user) => {
         else{
             setOpenUploadForm(true);
         }
+    };
+
+    const handleLikeOpen = () => {
+        setOpenLikeForm(true);
+        console.log("like button pressed properly")
+    };
+
+    const handleLikeClose = () => {
+        setOpenLikeForm(false);
     };
 
     let button;
@@ -134,7 +172,7 @@ const Home = (user) => {
         }
     };
 
-    const addLike = () => {
+    const addLike = (event) => {
         db.collection("artifacts")
             .doc(currentArtifactID)
             .collection("likes")
@@ -142,7 +180,12 @@ const Home = (user) => {
                 name: user.user.displayName,
                 timestamp: new Date(),
                 email: user.user.email,
+                reason: formValues.reason,
             })
+            .then(() => {
+                handleLikeClose();
+            })
+        event.preventDefault();
     };
 
 
@@ -161,6 +204,7 @@ const Home = (user) => {
                     </Modal>);
             }
         })()}
+
         <Grid container
               direction="row"
               justify="space-evenly"
@@ -179,7 +223,7 @@ const Home = (user) => {
                 <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
 
                 <IconButton
-                    onClick={() => addLike()}
+                    onClick={handleLikeOpen}
                     style={{
                         position: 'absolute',
                         bottom: '10px',
@@ -194,6 +238,40 @@ const Home = (user) => {
 
                     />
                 </IconButton>
+                <Modal
+                    id={"likeModal"}
+                    aria-labelledby="like-modal-title"
+                    aria-describedby="like-modal-description"
+                    className={classes.modal}
+                    open={openLikeForm}
+                    onClose={handleLikeClose}
+                >
+                    <div id={"likePopUp"}>
+                        <Grid container
+                              direction="column"
+                              justify="space-around"
+                              alignItems="center"
+                              spacing={4}>
+                            <h2 id="like-modal-title">Why would you like to inherit this artifact?</h2>
+                            <form onSubmit={addLike}>
+                                {'Reason: '}
+                                <br/>
+                                <textarea
+                                    name="reason"
+                                    value={formValues.reason}
+                                    onChange={event => handleInputChange(event)}
+                                    rows = {10}
+                                    type="text"
+                                    placeholder="Right your reason here"
+                                />
+                                <br/>
+                                <button disabled={isInvalid} type="submit">
+                                    Submit
+                                </button>
+                            </form>
+                        </Grid>
+                    </div>
+                </Modal>
                 </Grid>
                 <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
                     <Grid item xs={1}>
