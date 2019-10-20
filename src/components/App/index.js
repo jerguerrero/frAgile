@@ -19,10 +19,16 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// for testing only, should be deleted in the future
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
 import {get} from 'lodash';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+// for testing only, should be deleted in the future
+import Invite from '../Invite';
+import ArtifactManagement from '../ArtifactManagement';
 
 library.add(faHome, faFileUpload );
 
@@ -41,6 +47,16 @@ const App = (props) => {
             padding: theme.spacing(2, 4, 3),
         },
     }));
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const [value, setValue] = React.useState(0);
 
@@ -140,21 +156,33 @@ const App = (props) => {
                                 </text>
                             </Link>
                         </Grid>
+
+                        <Grid item>
+                            <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
+                                Admin
+                            </Button>
+                            <Menu
+                                id="admin-bar"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                            </Menu>
+                        </Grid>
+
+                        <Grid item>
+                            <Link to="/SignUp">SignUp</Link>
+                        </Grid>
+
+                        {/*for testing only, should be deleted in the future*/}
+
                         <Grid item>
                             <Link to="/Login">Login</Link>
                         </Grid>
 
-                        <Grid item>
-                            <Link to="/Admin">Admin</Link>
-                        </Grid>
-
-
-
-                        {/*for testing only, should be deleted in the future*/}
-                        <Grid item>
-                            <Link to="/SignUp">SignUp</Link>
-                        </Grid>
-                        {/*for testing only, should be deleted in the future*/}
                         <Grid item>
                             <LogOutButton/>
                         </Grid>
@@ -207,9 +235,11 @@ const App = (props) => {
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
                 <Route exact path="/Admin" component={Admin} />
+                <Route exact path="/SignUp" component={SignUp} />
 
                 {/*for testing only, should be deleted in the future*/}
-                <Route exact path="/SignUp" component={SignUp} />
+                <Route exact path="/Invite" component={Invite} />
+                <Route exact path="/ArtifactManagement" component={ArtifactManagement} />
 
 
             </div>
