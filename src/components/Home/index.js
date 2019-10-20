@@ -181,6 +181,7 @@ const Home = (user) => {
                 name: user.user.displayName,
                 timestamp: new Date(),
                 email: user.user.email,
+                uid: user.user.uid,
                 reason: formValues.reason,
             })
             .then(() => {
