@@ -15,7 +15,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 
 
-const ArtifactManagement = () => {
+const ArtifactManagement = (user) => {
+    console.log(user);
 
     const db = firebase.firestore();
 
@@ -25,7 +26,7 @@ const ArtifactManagement = () => {
     const [currentDocumentRef, setCurrentDocumentRef] = useState(null);
     const [currentImages, setCurrentImages] = useState(null);
 
-
+    console.log(currentDocumentRef);
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
         {
@@ -43,8 +44,9 @@ const ArtifactManagement = () => {
     );
 
     // Change owner registered for the artifact on the databse
-    const passDownArtifact = () =>{
-        console.log("OWNER CHANGED")
+    const passDownArtifact = (event) =>{
+        currentDocumentRef.set({owner: event.target.value}, {merge: true})
+        alert("OWNER CHANGED")
     };
 
     let num1;
@@ -167,13 +169,15 @@ const ArtifactManagement = () => {
                         {(() => {
                             if(likes && !likes.empty){
                                 return num1.map(document => {
+                                    console.log(document.data());
                                     return(
                                         <ListItem>
                                             {document.data().name}
                                             {":"}
                                             {document.data().reason}
                                             <button
-                                                onClick={passDownArtifact}>
+                                                value={document.data().uid}
+                                                onClick={(event) => passDownArtifact(event)}>
                                                 {"Pass Down"}
                                             </button>
                                         </ListItem>);

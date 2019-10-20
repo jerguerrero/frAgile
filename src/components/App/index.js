@@ -220,7 +220,10 @@ const App = (props) => {
 
                 {/*for testing only, should be deleted in the future*/}
                 <Route exact path="/Invite" component={Invite} />
-                <Route exact path="/ArtifactManagement" component={ArtifactManagement} />
+                <Route exact path="/ArtifactManagement"
+                       // component={ArtifactManagement} />
+                       render={(props) => <ArtifactManagement {...props} user={user} />}
+                       />
 
 
             </div>
