@@ -173,6 +173,7 @@ const Home = (user) => {
     };
 
     const addLike = (event) => {
+        // Record user like and reasoning
         db.collection("artifacts")
             .doc(currentArtifactID)
             .collection("likes")
