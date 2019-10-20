@@ -339,7 +339,7 @@ const Home = (user) => {
                     </List>
                     <div style={{textAlign: 'right'}}>
                         <IconButton
-                            onClick={() => addLike()}
+                            // onClick={() => addLike()}
                             style={{marginTop: '-70px', position: 'relative'}}
                         >
                             <FontAwesomeIcon
