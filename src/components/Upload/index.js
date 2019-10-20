@@ -6,6 +6,15 @@ import { useAlert } from 'react-alert'
 import Infinite from "react-infinite";
 import './upload.css';
 
+import {faWindowClose} from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconButton from '@material-ui/core/IconButton';
+
+library.add(faWindowClose);
+
+
+
 
 const Upload = ({handleOpenUploadForm}) => {
     const db = firebase.firestore();
@@ -107,6 +116,20 @@ const Upload = ({handleOpenUploadForm}) => {
                     </Infinite>
                 </Grid>
                 <Grid item xs={2}>
+                    <IconButton
+                        onClick={() => handleOpenUploadForm(false)}
+                        style={{
+                            bottom: '10px',
+                            width: '50px',
+                            height: '50px',
+                            position: 'relative',
+                            left: '100%'
+                        }}>
+                        <FontAwesomeIcon
+                            icon="window-close"
+                            color={"#F87531"}
+                        />
+                    </IconButton>
                     <form id={"photoUploadForm"} onSubmit={event => handleSubmit(event)}>
                         {/*Initial Fields*/}
                             <FileUploader
