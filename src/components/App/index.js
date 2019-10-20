@@ -158,8 +158,12 @@ const App = (props) => {
                         </Grid>
 
                         <Grid item>
+                            <h1>Heirloom</h1>
+                        </Grid>
+
+                        <Grid item style={{position: 'absolute', right: '30px'}}>
                             <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
-                                Admin
+                                <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
                             </Button>
                             <Menu
                                 id="admin-bar"
@@ -170,31 +174,8 @@ const App = (props) => {
                             >
                                 <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
                                 <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
                             </Menu>
-                        </Grid>
-
-                        <Grid item>
-                            <Link to="/SignUp">SignUp</Link>
-                        </Grid>
-
-                        {/*for testing only, should be deleted in the future*/}
-
-                        <Grid item>
-                            <Link to="/Login">Login</Link>
-                        </Grid>
-
-                        <Grid item>
-                            <LogOutButton/>
-                        </Grid>
-
-
-                        <Grid item>
-                            <h1>Heirloom</h1>
-                        </Grid>
-
-
-                        <Grid item style={{position: 'absolute', right: '30px'}}>
-                            <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
                         </Grid>
 
                     </Grid>
