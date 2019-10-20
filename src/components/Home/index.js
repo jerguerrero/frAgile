@@ -20,6 +20,7 @@ import  Upload  from '../Upload';
 import Modal from '@material-ui/core/Modal';
 import List from '@material-ui/core/List';
 import {makeStyles} from "@material-ui/core";
+import {get} from "lodash";
 library.add(faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle);
 
 const Home = (user) => {
@@ -190,6 +191,27 @@ const Home = (user) => {
         event.preventDefault();
     };
 
+    const addPhotoButton = () => {
+        if(get(user, 'user.uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
+            return(
+                <div style={{textAlign: 'right'}}>
+                    <IconButton
+                        // onClick={() => addLike()}
+                        style={{marginTop: '-70px', position: 'relative'}}
+                    >
+                        <FontAwesomeIcon
+                            icon="plus-circle"
+                            color={"#F87531"}
+                            onClick={() => handleOpenUploadForm ()}
+                        />
+                    </IconButton>
+                </div>
+            );
+        }
+        else{
+            return null;
+        }
+    }
 
     return (
     <div id={"homecontainer"}>
@@ -338,18 +360,7 @@ const Home = (user) => {
                     }
                 })()}
                     </List>
-                    <div style={{textAlign: 'right'}}>
-                        <IconButton
-                            // onClick={() => addLike()}
-                            style={{marginTop: '-70px', position: 'relative'}}
-                        >
-                            <FontAwesomeIcon
-                                icon="plus-circle"
-                                color={"#F87531"}
-                                onClick={() => handleOpenUploadForm()}
-                            />
-                        </IconButton>
-                    </div>
+                    {addPhotoButton()}
                 </Grid>
                 <Grid id={"leftpanelist"} item xs={12} md={12}>
                     <Card>
