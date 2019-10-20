@@ -122,6 +122,26 @@ const App = (props) => {
         }
     });
 
+    const userMenu = () => {
+        if(get(user, 'uid', false) === '8bKgltheuOMUK5Ye0EqTwMs9gCi2'){
+            return (
+                <>
+                    <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+                </>
+            );
+        }
+        else{
+            return (
+                <>
+                    <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+                </>
+            );
+        }
+
+    }
+
     return (
 
         <Router>
@@ -172,9 +192,8 @@ const App = (props) => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+
+                                {userMenu()}
                             </Menu>
                         </Grid>
 
