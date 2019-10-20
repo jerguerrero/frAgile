@@ -158,37 +158,6 @@ const App = (props) => {
                         </Grid>
 
                         <Grid item>
-                            <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
-                                Admin
-                            </Button>
-                            <Menu
-                                id="admin-bar"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
-                            </Menu>
-                        </Grid>
-
-                        <Grid item>
-                            <Link to="/SignUp">SignUp</Link>
-                        </Grid>
-
-                        {/*for testing only, should be deleted in the future*/}
-
-                        <Grid item>
-                            <Link to="/Login">Login</Link>
-                        </Grid>
-
-                        <Grid item>
-                            <LogOutButton/>
-                        </Grid>
-
-
-                        <Grid item>
                             <h1>Heirloom</h1>
                         </Grid>
 
