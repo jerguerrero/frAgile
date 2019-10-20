@@ -192,9 +192,21 @@ const App = (props) => {
                             <h1>Heirloom</h1>
                         </Grid>
 
-
                         <Grid item style={{position: 'absolute', right: '30px'}}>
-                            <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
+                            <Button aria-controls="admin-bar" aria-haspopup="true" onClick={handleClick}>
+                                <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
+                            </Button>
+                            <Menu
+                                id="admin-bar"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
+                            </Menu>
                         </Grid>
 
                     </Grid>
