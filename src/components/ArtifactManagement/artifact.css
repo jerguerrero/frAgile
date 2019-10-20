@@ -1,0 +1,45 @@
+#leftpanelist{
+    background-color: #FFFFFF;
+    border-radius: 2%;
+    border-color: #DDDFE2;
+    border-width: thick;
+    height: 35vh;
+    margin-top: 20px;
+
+}
+
+#middlepane{
+    background-color:  #FFFFFF;
+    border-radius: 2%;
+}
+
+#middlepaneimage{
+    background-color: #E7E3E1;
+    height: 63vh;
+    object-fit: contain;
+}
+
+#rightpanelist{
+    background-color:  #FFFFFF;
+    border-radius: 2%;
+    height: 35vh;
+
+}
+#rightArrow{
+    text-align: center;
+    position: absolute;
+    bottom: 35vh;
+    left: 63.5vw;
+}
+@media only screen and (max-width: 600px){
+    #rightArrow{
+        text-align: center;
+        position: absolute;
+        bottom: 35vh;
+        left: 94vw;
+    }
+}
+
+
+#homecontainer{
+}

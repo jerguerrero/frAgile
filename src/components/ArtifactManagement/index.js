@@ -10,8 +10,9 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Infinite from "react-infinite";
 import ListItem from "@material-ui/core/ListItem";
-
+import './artifact.css';
 import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
 
 
 const ArtifactManagement = () => {
@@ -82,7 +83,13 @@ const ArtifactManagement = () => {
                                 title="Artifacts"
                             />
                         </Card>
-                        <Infinite containerHeight={200} elementHeight={60}>
+
+                            <List style={{width: '100%',
+                                maxWidth: 360,
+                                position: 'relative',
+                                overflow: 'auto',
+                                maxHeight: 200,}}>
+
                             {(() => {
                                 if(artifacts){
                                     // Change this into artifacts that has subcollection 'likes' only
@@ -102,7 +109,7 @@ const ArtifactManagement = () => {
                                     });
                                 }
                             })()}
-                        </Infinite>
+                            </List>
                     </Grid>
                     <Grid id={"leftpanelist"} item xs={12} md={12}>
                         <Card>
@@ -111,7 +118,11 @@ const ArtifactManagement = () => {
                                 title="Description"
                             />
                         </Card>
-                        <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
+                        <List style={{width: '100%',
+                            maxWidth: 360,
+                            position: 'relative',
+                            overflow: 'auto',
+                            maxHeight: 200,}}>
                             {Object.keys(currentDocument).map(key => {
                                 if(key==="imageUrl"){
                                     return null;
@@ -128,7 +139,7 @@ const ArtifactManagement = () => {
                                     );
                                 }
                             })}
-                        </Infinite>
+                        </List>
                     </Grid>
                 </Grid>
 
