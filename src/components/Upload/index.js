@@ -7,8 +7,7 @@ import Infinite from "react-infinite";
 import './upload.css';
 
 
-const Upload = (props) => {
-
+const Upload = ({handleOpenUploadForm}) => {
     const db = firebase.firestore();
     const storage = firebase.storage().ref('image');
     const alert = useAlert();
@@ -43,23 +42,19 @@ const Upload = (props) => {
     };
 
     const handleChangeImage = (event) => {
-        console.log(event.target.files);
         const images = Array.from(event.target.files);
         setImages(images);
-        // images.forEach(image => {
-        //     console.log(image);
-        // });
     };
 
     const createArtifactWithImage = (imageUrl) => {
         var artifact = formValues;
         artifact["imageUrl"] = imageUrl;
-        console.log(artifact);
         db.collection("artifacts")
             .add(artifact)
             .then(() => {
                 console.log("Successfuly saved");
                 alert.show('Artifact Successfully Saved!')
+                handleOpenUploadForm(false);
             })
             .catch( error => {
                 console.log(error);
@@ -77,7 +72,6 @@ const Upload = (props) => {
     const handleUploadSuccess = async (filenames, task) => {
 
         const downloadURLs = filenames.map(filename => getDownloadURL(filename));
-        console.log(downloadURLs);
 
         Promise.all(downloadURLs).then(function(downloadURLs) {
             createArtifactWithImage(downloadURLs);
@@ -101,12 +95,13 @@ const Upload = (props) => {
     };
 
     return (
-        <div>
+        <div >
             <Grid container
                   direction="row"
                   justify="space-around"
                   alignItems="center"
-                  spacing={4}>
+                  spacing={4}
+                  style={{height: '100vh', backgroundColor: 'transparent'}}>
                 <Grid item xs={2}>
                     <Infinite containerHeight={200} elementHeight={40}>
                     </Infinite>

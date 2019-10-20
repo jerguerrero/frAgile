@@ -64,9 +64,10 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div >
             {renderRedirect()}
             <Grid container
+                  id={"loginModal"}
                   direction="column"
                   justify="space-around"
                   alignItems="center"

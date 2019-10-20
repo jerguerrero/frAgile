@@ -21,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
+import {get} from 'lodash';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -67,7 +68,6 @@ const App = (props) => {
     const [currentTab, setCurrentTab] = useState(0);
     const classes = useStyles();
 
-    console.log(user);
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -122,8 +122,6 @@ const App = (props) => {
         }
     });
 
-
-    console.log(user);
     return (
 
         <Router>
@@ -179,6 +177,8 @@ const App = (props) => {
                             <Link to="/SignUp">SignUp</Link>
                         </Grid>
 
+                        {/*for testing only, should be deleted in the future*/}
+
                         <Grid item>
                             <Link to="/Login">Login</Link>
                         </Grid>
@@ -187,22 +187,37 @@ const App = (props) => {
                             <LogOutButton/>
                         </Grid>
 
+
+                        <Grid item>
+                            <h1>Heirloom</h1>
+                        </Grid>
+
+
+                        <Grid item style={{position: 'absolute', right: '30px'}}>
+                            <h4>{"Hi "}{get(user, 'displayName', "user")}</h4>
+                        </Grid>
+
                     </Grid>
                 </AppBar>
                 <Modal
+                    id={"authModal"}
                     aria-labelledby="spring-modal-title"
                     aria-describedby="spring-modal-description"
                     className={classes.modal}
                     open={!user}
+
                 >
                     <div>
-                    <AppBar position="static">
+                        <Grid container id={"welcome"}>
+                            <Grid item><h1>Welcome to Heirloom</h1></Grid>
+                        </Grid>
+                    <AppBar id={"modalAppBar"} position="static">
                         <Tabs
                             value={value}
                             onChange={handleChange}
                         >
                             <Tab label="Login" {...a11yProps(0)} />
-                            <Tab label="SignUp" {...a11yProps(1)} />
+                            <Tab label="Sign Up" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
                         <TabPanel value={value} index={0}>

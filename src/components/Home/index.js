@@ -12,15 +12,16 @@ import { useCollection, useDocumentData} from 'react-firebase-hooks/firestore';
 import TextField from '@material-ui/core/TextField';
 import './home.css';
 import moment from "moment";
-import {faCaretLeft, faCaretRight, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
+import {faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import IconButton from '@material-ui/core/IconButton';
-
-library.add(faCaretLeft, faCaretRight, faThumbsUp);
+import  Upload  from '../Upload';
+import Modal from '@material-ui/core/Modal';
+import List from '@material-ui/core/List';
+library.add(faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle);
 
 const Home = (user) => {
-
     console.log(user);
 
     const db = firebase.firestore();
@@ -31,6 +32,7 @@ const Home = (user) => {
     const [currentDocumentRef, setCurrentDocumentRef] = useState(null);
     const [comment, setComment] = useState("");
     const [currentImages, setCurrentImages] = useState(null);
+    const [openUploadForm, setOpenUploadForm] = useState(false);
 
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
@@ -56,7 +58,6 @@ const Home = (user) => {
         }
     );
 
-    console.log(userInfo);
     const handleCommentChange = (event) =>{
         setComment(event.target.value);
     };
@@ -72,6 +73,15 @@ const Home = (user) => {
                 .catch( error => {
                     console.log(error);
                 });
+        }
+    };
+
+    const handleOpenUploadForm = () => {
+        if(openUploadForm){
+            setOpenUploadForm(false);
+        }
+        else{
+            setOpenUploadForm(true);
         }
     };
 
@@ -106,13 +116,9 @@ const Home = (user) => {
     let num1;
     if(comments && !comments.empty) {
         num1 = comments.docs;
-        num1.map(document => {
-            console.log(document.data());
-        });
 
         /* sort */
         num1.sort(chooselarger);
-
     }
     const navigateImageLeft = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
@@ -142,6 +148,19 @@ const Home = (user) => {
 
     return (
     <div id={"homecontainer"}>
+
+        {(() => {
+            if(openUploadForm){
+                return(
+                    <Modal
+                        aria-labelledby="spring-modal-title"
+                        aria-describedby="spring-modal-description"
+                        open={openUploadForm}
+                    >
+                        <Upload handleOpenUploadForm={setOpenUploadForm}/>
+                    </Modal>);
+            }
+        })()}
         <Grid container
               direction="row"
               justify="space-evenly"
@@ -161,7 +180,6 @@ const Home = (user) => {
 
                 <IconButton
                     onClick={() => addLike()}
-                    // disabled={true}
                     style={{
                         position: 'absolute',
                         bottom: '10px',
@@ -205,8 +223,6 @@ const Home = (user) => {
                         </IconButton>
                     </Grid>
                 </Grid>
-
-
             </Grid>
 
             <Grid container justify="space-evenly" xs={12} sm={3}>
@@ -217,7 +233,12 @@ const Home = (user) => {
                         title="Artifacts"
                     />
                 </Card>
-                <Infinite containerHeight={200} elementHeight={60}>
+
+                    <List style={{width: '100%',
+                        maxWidth: 360,
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: 200,}}>
                 {(() => {
                     if(artifacts){
                         return artifacts.docs.map(document => {
@@ -236,7 +257,19 @@ const Home = (user) => {
                         });
                     }
                 })()}
-                </Infinite>
+                    </List>
+                    <div style={{textAlign: 'right'}}>
+                        <IconButton
+                            onClick={() => addLike()}
+                            style={{marginTop: '-70px', position: 'relative'}}
+                        >
+                            <FontAwesomeIcon
+                                icon="plus-circle"
+                                color={"#F87531"}
+                                onClick={() => handleOpenUploadForm()}
+                            />
+                        </IconButton>
+                    </div>
                 </Grid>
                 <Grid id={"leftpanelist"} item xs={12} md={12}>
                     <Card>
@@ -245,7 +278,11 @@ const Home = (user) => {
                             title="Description"
                         />
                     </Card>
-                    <Infinite id="leftpanelist" containerHeight={200} elementHeight={40}>
+                    <List style={{width: '100%',
+                        maxWidth: 360,
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: 200,}}>
                         {Object.keys(currentDocument).map(key => {
                             if(key==="imageUrl"){
                                 return null;
@@ -262,7 +299,7 @@ const Home = (user) => {
                                 );
                             }
                         })}
-                    </Infinite>
+                    </List>
                 </Grid>
             </Grid>
 
@@ -308,7 +345,7 @@ const Home = (user) => {
                                         {":"}
                                         {document.data().comment}
                                         {", "}
-                                        {JSON.stringify(moment(Number(new Date().getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
+                                        {JSON.stringify(moment(Number(new Date(document.data().timestamp).getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
                                         {/*{comments.docs.toString()}*/}
                                     </ListItem>);
                             });
