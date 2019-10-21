@@ -432,12 +432,21 @@ const Home = (user) => {
                             return num1.map(document => {
                                 return(
                                     <ListItem>
-                                        {document.data().user}
-                                        {":"}
-                                        {document.data().comment}
-                                        {", "}
-                                        {JSON.stringify(moment(Number(new Date(document.data().timestamp).getTime().toString())).format('MMMM Do YYYY, h:mm:ss a'))}
-                                        {/*{comments.docs.toString()}*/}
+                                        <Grid container xs={12}>
+                                            <Grid container xs={12}>
+                                                <Grid item xs={2} style={{fontWeight: 700}}>
+                                                    {document.data().user? document.data().user : 'Anonymous'}
+                                                </Grid>
+                                                <Grid item xs={1} style={{maxWidth: '10px'}}>
+                                                </Grid>
+                                                <Grid item xs={9} style={{fontWeight: 300, fontSize: 11}}>
+                                                    {moment(Number(new Date(document.data().timestamp).getTime().toString())).format('DD/MM/YY, h:mm:ss a')}
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={4}>
+                                                {document.data().comment}
+                                            </Grid>
+                                        </Grid>
                                     </ListItem>);
                             });
                         }
