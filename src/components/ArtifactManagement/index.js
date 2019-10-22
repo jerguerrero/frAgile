@@ -13,6 +13,9 @@ import ListItem from "@material-ui/core/ListItem";
 import './artifact.css';
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
+import IconButton from "@material-ui/core/IconButton";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Modal from "@material-ui/core/Modal";
 
 
 const ArtifactManagement = (user) => {
@@ -26,7 +29,6 @@ const ArtifactManagement = (user) => {
     const [currentDocumentRef, setCurrentDocumentRef] = useState(null);
     const [currentImages, setCurrentImages] = useState(null);
 
-    console.log(currentDocumentRef);
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
         {
@@ -49,6 +51,23 @@ const ArtifactManagement = (user) => {
         alert("OWNER CHANGED")
     };
 
+    // Change image to the image to the left
+    const navigateImageLeft = () => {
+        var indexOfImage = currentImages.indexOf(currentImage);
+        if(indexOfImage >= 1){
+            setCurrentImage(currentImages[indexOfImage - 1]);
+        }
+    };
+
+    // Change image to the image to the right
+    const navigateImageRight = () => {
+        var indexOfImage = currentImages.indexOf(currentImage);
+        if(indexOfImage < currentImages.length - 1){
+            setCurrentImage(currentImages[indexOfImage + 1]);
+        }
+    };
+
+    // Get all document of likes for a particular document if it exist
     let num1;
     if(likes && !likes.empty) {
         num1 = likes.docs;
@@ -60,6 +79,10 @@ const ArtifactManagement = (user) => {
     return (
 
         <div id={"homecontainer"}>
+
+            <h1 align={'center'}>Pass Down Artifact</h1>
+
+            {/*Image panel*/}
             <Grid container
                   direction="row"
                   justify="space-evenly"
@@ -75,8 +98,43 @@ const ArtifactManagement = (user) => {
 
 
                     </Grid>
+
+                    <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
+
+                        {/*Button to go the left image*/}
+                        <Grid item xs={1}>
+                            <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}} onClick={()=>{
+                                navigateImageLeft();
+                            }}>
+                                <FontAwesomeIcon
+                                    icon="caret-left"
+                                    style={{width: '20px'}}
+                                    color={"white"}
+                                />
+                            </IconButton>
+                        </Grid>
+
+                        <Grid item xs={10}>
+                        </Grid>
+
+                        {/*Button to go the right image*/}
+                        <Grid item xs={1}  style={{textAlign: "right"}}>
+                            <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}}
+                                         onClick={()=>{
+                                             navigateImageRight();
+                                         }}>
+                                <FontAwesomeIcon
+                                    style={{width: '20px'}}
+                                    icon="caret-right"
+                                    color={"white"}
+
+                                />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
+                {/*Artifact list*/}
                 <Grid container justify="space-evenly" xs={12} sm={3}>
                     <Grid id="rightpanelist" item xs={12} md={12}>
                         <Card>
@@ -113,6 +171,8 @@ const ArtifactManagement = (user) => {
                             })()}
                             </List>
                     </Grid>
+
+                    {/*Artifact Descriptions*/}
                     <Grid id={"leftpanelist"} item xs={12} md={12}>
                         <Card>
                             <CardHeader
@@ -146,13 +206,8 @@ const ArtifactManagement = (user) => {
                 </Grid>
 
             </Grid>
-            <Grid container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="flex-start"
-                  spacing={4}>
-                <Grid item xs={12} sm={3}/>
-            </Grid>
+
+            {/*Inheritance candidate/User who likes the artifacts*/}
             <Grid container
                   direction="row"
                   justify="space-evenly"

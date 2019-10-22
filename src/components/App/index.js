@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import  Upload  from '../Upload';
 import Home from '../Home';
-import Admin from '../Admin';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -22,11 +21,8 @@ import Box from '@material-ui/core/Box';
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
 import {get} from 'lodash';
-
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
-// for testing only, should be deleted in the future
 import Invite from '../Invite';
 import ArtifactManagement from '../ArtifactManagement';
 
@@ -48,6 +44,8 @@ const App = (props) => {
         },
     }));
 
+
+    // Set anchor variable for menu item
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
@@ -57,6 +55,7 @@ const App = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
 
     const [value, setValue] = React.useState(0);
 
@@ -113,7 +112,7 @@ const App = (props) => {
     };
 
 
-
+    // Detect user change and store it on a local variable
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             setUser(user);
@@ -122,12 +121,13 @@ const App = (props) => {
         }
     });
 
+    // show different user menu depending on if user is admin/Helen
     const userMenu = () => {
         if(get(user, 'uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
             return (
                 <>
-                    <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
-                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/Invite" class={"button"}>Invite User</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement" class={"button"}>Pass Down Artifact</Link></MenuItem>
                     <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
                 </>
             );
@@ -236,7 +236,6 @@ const App = (props) => {
                 />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
-                <Route exact path="/Admin" component={Admin} />
                 <Route exact path="/SignUp" component={SignUp} />
 
                 {/*for testing only, should be deleted in the future*/}
