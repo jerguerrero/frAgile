@@ -1,10 +1,31 @@
 import React, {Component, useState} from 'react';
-import {Link, Redirect} from 'react-router-dom';
 import * as firebase from 'firebase';
 import {useAlert} from "react-alert";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 const Invite = () => {
+
+    const useStyles = makeStyles(theme => ({
+        container: {
+            display: 'flex',
+            flexWrap: 'wrap',
+        },
+        textField: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            backgroundColor: theme.palette.common.white,
+        },
+        dense: {
+            marginTop: theme.spacing(2),
+        },
+        menu: {
+            width: 200,
+        },
+    }));
+
+    const classes = useStyles();
 
     const db = firebase.firestore();
     const alert = useAlert();
@@ -44,15 +65,22 @@ const Invite = () => {
               alignItems="center"
               spacing={4}>
             <h1>Invite User</h1>
-            <form onSubmit={event => inviteUser(event)}>
+            <form className={classes.container} onSubmit={event => inviteUser(event)}>
                 {'Invite user via email: '}
-                <br/>
-                <input
+                <TextField
+                    id="outlined-email-input"
+                    label="Email"
+                    className={classes.textField}
+                    fullWidth={true}
+                    type="email"
                     name="email"
+                    autoComplete="email"
                     value={formValues.email}
                     onChange={event => handleInputChange(event)}
                     type="text"
                     placeholder="Type user email address here"
+                    margin="normal"
+                    variant="outlined"
                 />
                 <br/>
                 <button type="submit">
