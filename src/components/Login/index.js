@@ -72,7 +72,6 @@ const Login = () => {
                   justify="space-around"
                   alignItems="center"
                   spacing={4}>
-            <h1>Login</h1>
             <form onSubmit={event => loginUser(event)}>
                 {'Email: '}
                 <br/>
