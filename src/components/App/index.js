@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import  Upload  from '../Upload';
 import Home from '../Home';
-import Admin from '../Admin';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -236,7 +235,6 @@ const App = (props) => {
                 />
                 <Route exact path="/Upload" component={Upload} />
                 <Route exact path="/Login" component={Login} />
-                <Route exact path="/Admin" component={Admin} />
                 <Route exact path="/SignUp" component={SignUp} />
 
                 {/*for testing only, should be deleted in the future*/}
