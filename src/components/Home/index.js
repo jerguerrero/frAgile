@@ -115,11 +115,12 @@ const Home = (user) => {
         }
     };
 
+    // open like popup
     const handleLikeOpen = () => {
         setOpenLikeForm(true);
-        console.log("like button pressed properly")
     };
 
+    // close popup when button is pressed
     const handleLikeClose = () => {
         setOpenLikeForm(false);
     };
@@ -159,6 +160,8 @@ const Home = (user) => {
         /* sort */
         num1.sort(chooselarger);
     }
+
+    // Change image to the image to the left
     const navigateImageLeft = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
         if(indexOfImage >= 1){
@@ -166,6 +169,7 @@ const Home = (user) => {
         }
     };
 
+    // Change image to the image to the right
     const navigateImageRight = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
         if(indexOfImage < currentImages.length - 1){
@@ -173,6 +177,7 @@ const Home = (user) => {
         }
     };
 
+    // Add like to the database and store it as a subcollection inside current artifact
     const addLike = (event) => {
         // Record user like and reasoning
         db.collection("artifacts")
@@ -191,12 +196,14 @@ const Home = (user) => {
         event.preventDefault();
     };
 
+    // open upload form popout when the plus button is clicked
     const addPhotoButton = () => {
+
+        // Only admin/Helen can see and use the button
         if(get(user, 'user.uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
             return(
                 <div style={{textAlign: 'right'}}>
                     <IconButton
-                        // onClick={() => addLike()}
                         style={{marginTop: '-70px', position: 'relative'}}
                     >
                         <FontAwesomeIcon
@@ -246,6 +253,7 @@ const Home = (user) => {
                 </Grid>
                 <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
 
+                {/*like popup open when the 'like' button is clicked*/}
                 <IconButton
                     onClick={handleLikeOpen}
                     style={{

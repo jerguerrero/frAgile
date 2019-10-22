@@ -16,14 +16,17 @@ const Login = () => {
     const [fields, setFields] = useState(["Email", "Password"]);
     const [signUpStatus, setSignUpStatus] = useState(false);
 
+    // Login is invalid if email and password is empty
     const isInvalid = formValues.password === undefined || formValues.email === undefined ||
         formValues.password === '' || formValues.email === '';
 
+    // Record changes in the input
     const handleInputChange = (event) => {
         //Adds new value
         setFormValues({...formValues, [event.target.name]: event.target.value});
     };
 
+    // Redirect page to home after user logged in
     const renderRedirect = () => {
         if(signUpStatus){
             return <Redirect to='/' />
@@ -33,8 +36,7 @@ const Login = () => {
         }
     }
 
-
-
+    // Check user email and password and login user if it matched the firebase authenticaion
     const  loginUser = (event) => {
         auth.signInWithEmailAndPassword(formValues.email, formValues.password)
             .then(() => {
@@ -46,7 +48,7 @@ const Login = () => {
                 setSignUpStatus(true);
             })
             .catch(error => {
-                //do something
+                // Show login error to user
                 var errorCode = error.code;
                 var errorMessage = error.message;
 
@@ -58,7 +60,6 @@ const Login = () => {
                     alert.show(errorMessage);
                 }
 
-                console.log(error);
             });
         event.preventDefault();
     };

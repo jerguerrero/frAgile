@@ -33,6 +33,7 @@ const Invite = () => {
     // State for for form values
     const [formValues, setFormValues] = useState("");
 
+    // Record changes in the email input
     const handleInputChange = (event) => {
         //Adds new value
         setFormValues({...formValues, [event.target.name]: event.target.value});

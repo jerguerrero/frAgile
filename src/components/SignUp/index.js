@@ -26,6 +26,7 @@ const SignUpPage = (props) => {
         }
     );
 
+    // Form is invalid is the passwords doesn't match or there is an empty field
     const isInvalid =
         formValues.passwordOne !== formValues.passwordTwo ||
         formValues.passwordOne === '' ||
@@ -35,11 +36,13 @@ const SignUpPage = (props) => {
         formValues.email === undefined ||
         formValues.passwordOne === undefined;
 
+    // Record changes in the input
     const handleInputChange = (event) => {
         //Adds new value
         setFormValues({...formValues, [event.target.name]: event.target.value});
     };
 
+    // Redirect the page to home after user has signup successfully
     const renderRedirect = () => {
         if(signUpStatus){
             return <Redirect to='/' />
@@ -49,6 +52,7 @@ const SignUpPage = (props) => {
         }
     }
 
+    // Register user to the firebase authentication and database if they are registered successfully
     const registerUser = (event) => {
         event.preventDefault();
 
@@ -92,7 +96,7 @@ const SignUpPage = (props) => {
 
                 })
                 .catch(error => {
-                    //do something
+                    // Alert users on error
                     var errorCode = error.code;
                     var errorMessage = error.message;
 
@@ -176,10 +180,5 @@ const SignUpPage = (props) => {
     )
 };
 
-const SignUpLink = () => (
-    <p>
-        Don't have an account? <Link to="/SignUp">Sign Up</Link>
-    </p>
-);
 export default SignUpPage;
 

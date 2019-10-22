@@ -29,7 +29,6 @@ const ArtifactManagement = (user) => {
     const [currentDocumentRef, setCurrentDocumentRef] = useState(null);
     const [currentImages, setCurrentImages] = useState(null);
 
-    console.log(currentDocumentRef);
     const [artifacts, artifactsLoading, artifactsError] = useCollection(
         db.collection('artifacts'),
         {
@@ -52,6 +51,7 @@ const ArtifactManagement = (user) => {
         alert("OWNER CHANGED")
     };
 
+    // Change image to the image to the left
     const navigateImageLeft = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
         if(indexOfImage >= 1){
@@ -59,6 +59,7 @@ const ArtifactManagement = (user) => {
         }
     };
 
+    // Change image to the image to the right
     const navigateImageRight = () => {
         var indexOfImage = currentImages.indexOf(currentImage);
         if(indexOfImage < currentImages.length - 1){
@@ -66,6 +67,7 @@ const ArtifactManagement = (user) => {
         }
     };
 
+    // Get all document of likes for a particular document if it exist
     let num1;
     if(likes && !likes.empty) {
         num1 = likes.docs;
@@ -78,7 +80,9 @@ const ArtifactManagement = (user) => {
 
         <div id={"homecontainer"}>
 
-            {/*<h1 align={'center'}>Pass Down Artifact</h1>*/}
+            <h1 align={'center'}>Pass Down Artifact</h1>
+
+            {/*Image panel*/}
             <Grid container
                   direction="row"
                   justify="space-evenly"
@@ -95,12 +99,9 @@ const ArtifactManagement = (user) => {
 
                     </Grid>
 
-                    {/*Leftover of like button*/}
-                    <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
-
-                    </Grid>
-
                     <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
+
+                        {/*Button to go the left image*/}
                         <Grid item xs={1}>
                             <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}} onClick={()=>{
                                 navigateImageLeft();
@@ -112,8 +113,11 @@ const ArtifactManagement = (user) => {
                                 />
                             </IconButton>
                         </Grid>
+
                         <Grid item xs={10}>
                         </Grid>
+
+                        {/*Button to go the right image*/}
                         <Grid item xs={1}  style={{textAlign: "right"}}>
                             <IconButton  style={{textAlign: "left", position: 'relative',bottom: '35vh',}}
                                          onClick={()=>{
@@ -130,6 +134,7 @@ const ArtifactManagement = (user) => {
                     </Grid>
                 </Grid>
 
+                {/*Artifact list*/}
                 <Grid container justify="space-evenly" xs={12} sm={3}>
                     <Grid id="rightpanelist" item xs={12} md={12}>
                         <Card>
@@ -166,6 +171,8 @@ const ArtifactManagement = (user) => {
                             })()}
                             </List>
                     </Grid>
+
+                    {/*Artifact Descriptions*/}
                     <Grid id={"leftpanelist"} item xs={12} md={12}>
                         <Card>
                             <CardHeader
@@ -200,6 +207,7 @@ const ArtifactManagement = (user) => {
 
             </Grid>
 
+            {/*Inheritance candidate/User who likes the artifacts*/}
             <Grid container
                   direction="row"
                   justify="space-evenly"

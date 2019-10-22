@@ -21,11 +21,8 @@ import Box from '@material-ui/core/Box';
 import SignUp from '../SignUp';
 import LogOutButton from '../LogOut';
 import {get} from 'lodash';
-
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
-// for testing only, should be deleted in the future
 import Invite from '../Invite';
 import ArtifactManagement from '../ArtifactManagement';
 
@@ -47,6 +44,8 @@ const App = (props) => {
         },
     }));
 
+
+    // Set anchor variable for menu item
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
@@ -56,6 +55,7 @@ const App = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
 
     const [value, setValue] = React.useState(0);
 
@@ -112,7 +112,7 @@ const App = (props) => {
     };
 
 
-
+    // Detect user change and store it on a local variable
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             setUser(user);
@@ -121,6 +121,7 @@ const App = (props) => {
         }
     });
 
+    // show different user menu depending on if user is admin/Helen
     const userMenu = () => {
         if(get(user, 'uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
             return (

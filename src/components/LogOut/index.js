@@ -17,6 +17,7 @@ const LogOutButton = () => {
     const classes = useStyles();
 
     return (
+        // Logout user when the button is clicked
         <Button className={classes.button} fullWidth={true} variant={'outlined'} onClick={() => firebase.auth().signOut()}>
             Log Out
         </Button>
