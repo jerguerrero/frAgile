@@ -1,14 +1,13 @@
 import React from 'react';
 import firebase from '../Firebase';
+import {Link} from "react-router-dom";
 
 const LogOutButton = () => {
 
-    //const auth = firebase.auth();
-
     return (
-        <button type="button" onClick={() => firebase.auth().signOut()}>
+        <Link to="/" class={"button"} onClick={() => firebase.auth().signOut()}>
             Log Out
-        </button>
+        </Link>
     )
 };
 export default LogOutButton;

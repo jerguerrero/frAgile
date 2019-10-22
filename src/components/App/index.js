@@ -126,8 +126,8 @@ const App = (props) => {
         if(get(user, 'uid', false) === '4KuxRhxmTdesil7mUMe2F0oqQD22'){
             return (
                 <>
-                    <MenuItem onClick={handleClose}><Link to="/Invite">Invite User</Link></MenuItem>
-                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement">Pass Down Artifact</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/Invite" class={"button"}>Invite User</Link></MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/ArtifactManagement" class={"button"}>Pass Down Artifact</Link></MenuItem>
                     <MenuItem onClick={handleClose}><LogOutButton/></MenuItem>
                 </>
             );
