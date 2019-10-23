@@ -21,6 +21,7 @@ import Modal from '@material-ui/core/Modal';
 import List from '@material-ui/core/List';
 import {makeStyles} from "@material-ui/core";
 import {get} from "lodash";
+import Image from 'material-ui-image'
 library.add(faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle);
 
 const Home = (user) => {
@@ -36,7 +37,7 @@ const Home = (user) => {
     const [currentImages, setCurrentImages] = useState(null);
     const [openUploadForm, setOpenUploadForm] = useState(false);
     const [openLikeForm, setOpenLikeForm] = useState(false);
-
+    const [imageLoading, setImageLoading] = useState(false);
     // State for for form values
     const [formValues, setFormValues] = useState(["", ""]);
 
@@ -244,12 +245,13 @@ const Home = (user) => {
 
             <Grid id={"middlepane"} style={{position: 'relative'}} item xs={12} sm={8}>
                 <Grid item xs={12} >
-                    <CardMedia
-                        id={"middlepaneimage"}
-                        component="img"
-                        image={currentImage}/>
-
-
+                    <Image
+                      id={"middlepaneimage"}
+                      src={currentImage}
+                      style={{backgroundColor: '#E7E3E1',
+                          paddingTop: '63vh',
+                          objectFit: 'contain'}}
+                    />
                 </Grid>
                 <Grid item xs={12} style={{textAlign: "center", position: 'relative'}}>
 
@@ -270,6 +272,16 @@ const Home = (user) => {
 
                     />
                 </IconButton>
+                    <div
+                      onClick={handleLikeOpen}
+                      style={{
+                          position: 'absolute',
+                          width: '96%',
+                          height: '50px',
+                          textAlign: 'right'
+                      }}>
+                        {currentImages? "Photo " + (currentImages.indexOf(currentImage) + 1) + "/" + (currentImages.length): null}
+                    </div>
                 <Modal
                     id={"likeModal"}
                     aria-labelledby="like-modal-title"
@@ -304,6 +316,7 @@ const Home = (user) => {
                         </Grid>
                     </div>
                 </Modal>
+
                 </Grid>
                 <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
                     <Grid item xs={1}>
@@ -348,7 +361,8 @@ const Home = (user) => {
                         maxWidth: 360,
                         position: 'relative',
                         overflow: 'auto',
-                        maxHeight: 200,}}>
+                        maxHeight: 200,
+                        height: 200}}>
                 {(() => {
                     if(artifacts){
                         return artifacts.docs.map(document => {
@@ -356,11 +370,13 @@ const Home = (user) => {
                                 <ListItem
                                     button
                                     onClick={()=>{
+                                        setImageLoading(true);
                                         setCurrentImage(document.data().imageUrl[0]);
                                         setCurrentImages(document.data().imageUrl);
                                         setCurrentDocument(document.data());
                                         setCurrentArtifactID(document.id);
                                         setCurrentDocumentRef(document.ref);
+                                        setImageLoading(false);
                                     }}>
                                         {document.data().Name}
                                 </ListItem>);
