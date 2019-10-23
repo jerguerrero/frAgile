@@ -15,8 +15,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Modal from "@material-ui/core/Modal";
-
+import {faUserTimes, faUserLock} from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {get} from 'lodash';
+library.add(faUserTimes, faUserLock);
 
 const ArtifactManagement = (user) => {
     console.log(user);
@@ -96,7 +98,23 @@ const ArtifactManagement = (user) => {
                             component="img"
                             image={currentImage}/>
 
+                        <IconButton
+                          disabled={true}
+                          style={{
+                              position: 'absolute',
+                              top: '10px',
+                              right: '10px',
+                              width: '50px',
+                              height: '50px',
+                              border:  'solid',
+                              borderRadius: '200%',
+                              backgroundColor: "#E7E3E1"}}>
+                            <FontAwesomeIcon
+                              icon={get(currentDocument, 'owner', false)? 'user-lock': 'user-times'}
+                              color={"#F87531"}
 
+                            />
+                        </IconButton>
                     </Grid>
 
                     <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
@@ -186,7 +204,7 @@ const ArtifactManagement = (user) => {
                             overflow: 'auto',
                             maxHeight: 200,}}>
                             {Object.keys(currentDocument).map(key => {
-                                if(key==="imageUrl"){
+                                if(key==="imageUrl" || key==="owner"){
                                     return null;
                                 }
                                 else {
@@ -213,7 +231,7 @@ const ArtifactManagement = (user) => {
                   justify="space-evenly"
                   alignItems="flex-start"
                   spacing={4}>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={8} style={{marginTop: "10px"}}>
                     <Card>
                         <CardHeader
                             style={{textAlign: "center"}}
@@ -227,14 +245,34 @@ const ArtifactManagement = (user) => {
                                     console.log(document.data());
                                     return(
                                         <ListItem>
-                                            {document.data().name}
-                                            {":"}
-                                            {document.data().reason}
-                                            <button
-                                                value={document.data().uid}
-                                                onClick={(event) => passDownArtifact(event)}>
-                                                {"Pass Down"}
-                                            </button>
+                                            <Grid container xs={12}>
+                                                <Grid container xs={12}>
+                                                    <Grid item xs={2} style={{fontWeight: 700}}>
+                                                        {document.data().name? document.data().name : 'Anonymous'}
+                                                    </Grid>
+                                                    <Grid item xs={1} style={{maxWidth: '10px'}}>
+                                                    </Grid>
+                                                    <Grid item xs={9} style={{fontWeight: 300, fontSize: 11}}>
+                                                        {(() => {
+                                                            if(get(currentDocument, 'owner', null) === document.data().uid){
+                                                                return (<div>{"CURRENT OWNER"}</div>);
+                                                            }
+                                                            else{
+                                                                return (<button
+                                                                  value={document.data().uid}
+                                                                  onClick={(event) => passDownArtifact(event)}>
+                                                                    {"Pass Down"}
+                                                                </button>);
+                                                            }
+                                                        })()}
+                                                        {}
+
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                    {document.data().reason}
+                                                </Grid>
+                                            </Grid>
                                         </ListItem>);
                                 });
                             }

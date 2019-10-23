@@ -273,7 +273,6 @@ const Home = (user) => {
                     />
                 </IconButton>
                     <div
-                      onClick={handleLikeOpen}
                       style={{
                           position: 'absolute',
                           width: '96%',
@@ -399,7 +398,7 @@ const Home = (user) => {
                         overflow: 'auto',
                         maxHeight: 200,}}>
                         {Object.keys(currentDocument).map(key => {
-                            if(key==="imageUrl"){
+                            if(key==="imageUrl" || key==="owner"){
                                 return null;
                             }
                             else {
