@@ -108,6 +108,12 @@ const App = (props) => {
 
         var el7 =  document.getElementById("mainappbar");
         el7.style.backgroundImage =   'linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)';
+
+
+        var el8 =  document.getElementById("middlepane");
+        el8.style.background =   'url(https://media.giphy.com/media/UgxKMnMAaS4co/giphy.gif)';
+
+
     }
 
     const useStyles = makeStyles(theme => ({
