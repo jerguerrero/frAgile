@@ -273,7 +273,6 @@ const Home = (user) => {
                     />
                 </IconButton>
                     <div
-                      onClick={handleLikeOpen}
                       style={{
                           position: 'absolute',
                           width: '96%',

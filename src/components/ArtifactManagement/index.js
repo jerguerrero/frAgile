@@ -15,10 +15,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Modal from "@material-ui/core/Modal";
-import moment from '../Home';
+import {faUserTimes, faUserLock} from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
 import {get} from 'lodash';
-
+library.add(faUserTimes, faUserLock);
 
 const ArtifactManagement = (user) => {
     console.log(user);
@@ -98,7 +98,23 @@ const ArtifactManagement = (user) => {
                             component="img"
                             image={currentImage}/>
 
+                        <IconButton
+                          disabled={true}
+                          style={{
+                              position: 'absolute',
+                              top: '10px',
+                              right: '10px',
+                              width: '50px',
+                              height: '50px',
+                              border:  'solid',
+                              borderRadius: '200%',
+                              backgroundColor: "#E7E3E1"}}>
+                            <FontAwesomeIcon
+                              icon={get(currentDocument, 'owner', false)? 'user-lock': 'user-times'}
+                              color={"#F87531"}
 
+                            />
+                        </IconButton>
                     </Grid>
 
                     <Grid container xs={12} style={{textAlign: "left", position: 'relative'}}>
