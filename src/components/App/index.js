@@ -25,10 +25,90 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Invite from '../Invite';
 import ArtifactManagement from '../ArtifactManagement';
+import IconButton from '@material-ui/core/IconButton';
 
 library.add(faHome, faFileUpload );
 
 const App = (props) => {
+
+    function changeBackground(color) {
+        document.body.style.background = 'url(https://media1.giphy.com/media/aRZ4vTsHnyW6A/giphy.gif)';
+        document.body.style.fontFamily = `"COMIC SANS", "COMIC RELIEF", PAPYRUS, cursive`;
+        document.body.style.color = 'red';
+        var x =  document.getElementsByClassName("MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary");
+
+
+// Create a for loop and set the background color of all p elements in div
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.fontFamily = `"COMIC SANS", "COMIC RELIEF", PAPYRUS, cursive`;
+            x[i].style.color = 'green';
+        }
+
+        var y =  document.getElementsByClassName("MuiTypography-root MuiListItemText-primary MuiTypography-body1");
+
+
+// Create a for loop and set the background color of all p elements in div
+        var j;
+        for (j = 0; j < y.length; j++) {
+            y[j].style.fontFamily = `"COMIC SANS", "COMIC RELIEF", PAPYRUS, cursive`;
+            y[j].style.color = 'blue';
+        }
+
+        // element that will be wrapped
+        var el = document.querySelector('#passDownArtifact');
+        // create wrapper container
+        if(el){
+                var wrapper = document.createElement('marquee');
+                // insert wrapper before el in the DOM tree
+                el.parentNode.insertBefore(wrapper, el);
+                // move el into wrapper
+                wrapper.appendChild(el);
+            }
+
+        // element that will be wrapped
+        var el2 = document.querySelector('#titleOfApp');
+        // create wrapper container
+        el2.style.paddingTop = '20px';
+        var wrapper2 = document.createElement('marquee');
+        // insert wrapper before el in the DOM tree
+        el2.parentNode.insertBefore(wrapper2, el2);
+        // move el into wrapper
+        wrapper2.appendChild(el2);
+
+        // element that will be wrapped
+        var el3 = document.querySelectorAll('.MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button');
+        for(var k = 0; k < el3.length; k++) {
+        // create wrapper container
+            var wrapper3 = document.createElement ('marquee');
+        // insert wrapper before el in the DOM tree
+            el3[k].parentNode.insertBefore (wrapper3, el3[k]);
+        // move el into wrapper
+            wrapper3.appendChild (el3[k]);
+        }
+
+        var el4 =  document.getElementsByClassName("MuiPaper-root MuiPaper-elevation1 MuiCard-root MuiPaper-rounded");
+
+        for(var l = 0; l < el4.length; l++) {
+            el4[l].style.background = 'url(https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX26992147.jpg)';
+        }
+
+
+        var el5 =  document.getElementsByClassName("MuiList-root MuiList-padding");
+
+        for(var m = 0; m < el5.length; m++) {
+            el5[m].style.backgroundColor = 'yellow';
+        }
+
+        var el6 =  document.getElementsByClassName("MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8");
+
+        for(var n = 0; n < el6.length; n++) {
+            el6[n].style.backgroundColor = 'yellow';
+        }
+
+        var el7 =  document.getElementById("mainappbar");
+        el7.style.backgroundImage =   'linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)';
+    }
 
     const useStyles = makeStyles(theme => ({
         modal: {
@@ -147,6 +227,7 @@ const App = (props) => {
         <Router>
             <div >
                 <AppBar id={"mainappbar"} position="static" >
+
                     <Grid container
                           direction="row"
                           justify="flex-start"
@@ -177,9 +258,12 @@ const App = (props) => {
                             {/*</Link>*/}
                         {/*</Grid>*/}
 
+                        <IconButton
+                          onClick={() => changeBackground('red')}>
+                        </IconButton>
                         <Grid item>
                             <Link to="/" class={"button"}>
-                                <h1 style={{color: 'white'}}>{"Heirloom"}</h1>
+                                <h1 id={"titleOfApp"} style={{color: 'white'}}>{"Heirloom"}</h1>
                             </Link>
                         </Grid>
 

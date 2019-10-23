@@ -27,6 +27,7 @@ library.add(faCaretLeft, faCaretRight, faThumbsUp, faPlusCircle);
 const Home = (user) => {
     console.log(user);
 
+
     const db = firebase.firestore();
 
     const [currentDocument, setCurrentDocument] = useState({});
@@ -242,7 +243,6 @@ const Home = (user) => {
               justify="space-evenly"
               alignItems="flex-start"
               spacing={4}>
-
             <Grid id={"middlepane"} style={{position: 'relative'}} item xs={12} sm={8}>
                 <Grid item xs={12} >
                     <Image
@@ -272,6 +272,7 @@ const Home = (user) => {
 
                     />
                 </IconButton>
+
                     <div
                       style={{
                           position: 'absolute',
