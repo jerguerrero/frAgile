@@ -82,7 +82,7 @@ const ArtifactManagement = (user) => {
 
         <div id={"homecontainer"}>
 
-            <h1 align={'center'}>Pass Down Artifact</h1>
+            <h1 id={"passDownArtifact"} align={'center'}>Pass Down Artifact</h1>
 
             {/*Image panel*/}
             <Grid container
