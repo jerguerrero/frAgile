@@ -1,52 +1,50 @@
 .button {
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-    align-items: center;
-
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  align-items: center;
 }
-#mainappbar{
-    padding-left: 10vw;
-    background-color: #6f84a6;
-    height: 4vh;
-    vertical-align: center;
-    justify-content: center;
-    margin-bottom: 5vw;
+#mainappbar {
+  padding-left: 10vw;
+  background-color: #6f84a6;
+  height: 4vh;
+  vertical-align: center;
+  justify-content: center;
+  margin-bottom: 5vw;
 }
-#mainappcontainer{
-    background-color: #DCD0C0;
+#mainappcontainer {
+  background-color: #dcd0c0;
 }
-text{
-    color: white;
+text {
+  color: white;
 }
-#loginModal{
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    padding: 1em;
-
+#loginModal {
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 1em;
 }
 
 #modalAppBar {
-    background-color: white;
-    color: black;
-    padding: 1em;
-    align-items: center;
+  background-color: white;
+  color: black;
+  padding: 1em;
+  align-items: center;
 }
 
 #welcome {
-    background-color: white;
-    padding: 1em;
+  background-color: white;
+  padding: 1em;
 }
 
 #modalTabs {
-    background-color:white;
+  background-color: white;
 }
 
 #authModal {
-    background-color: white;
+  background-color: white;
 }
 
 #authModal div {
-    background-color: white;
+  background-color: white;
 }
